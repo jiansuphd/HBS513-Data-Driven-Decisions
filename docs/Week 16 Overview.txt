@@ -1,9 +1,0 @@
-<div id="dp-wrapper" class="dp-wrapper">
-    <div style="background: #58595B; margin-bottom: 15px; color: #ffffff; text-align: center; display: block;"><img src="https://utk.instructure.com/courses/242597/files/28448703/download" alt=" " width="100%" height="auto" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448703" data-api-returntype="File" /></div>
-    <h2><span style="color: #4b4b4b;"><strong>Final Assignments Due</strong></span></h2>
-    <hr style="border-top: 3px solid orange;" />
-    <h3><span style="color: #58595b;"><strong><img id="12823656" role="presentation" src="https://utk.instructure.com/courses/242597/files/28448522/preview" alt="" width="60" height="60" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448522" data-api-returntype="File" /> Overview</strong></span></h3>
-    <p>This is the last week of the semester and the final day to turn in your work from weeks 10+. It is also the final week that I will accept any late assignments. Please make sure that any and all issues are cleared up this week.</p>
-    <p><strong>NOTE: ALL ASSIGNMENTS ARE DUE BY MAY 12</strong></p>
-    <p><span style="font-size: 14pt;"><strong>Thank you all for a great semester!</strong></span></p>
-</div>
