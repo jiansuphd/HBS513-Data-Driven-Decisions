@@ -1,0 +1,208 @@
+<div id="dp-wrapper" class="dp-wrapper">
+    <div style="background: #58595B; margin-bottom: 15px; color: #ffffff; text-align: center;"><img src="https://utk.instructure.com/courses/242597/files/28448703/download" alt="Week 4 Banner" width="100%" height="auto" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448703" data-api-returntype="File" /></div>
+    <hr style="border-top: 3px solid orange;" />
+    <h2 style="text-align: center;"><strong>Why Design Matters: Improving Causal Inference Through Better Comparisons</strong></h2>
+    <hr style="border-top: 3px solid orange;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px; margin-bottom: 20px;">
+        <h3><strong>Introduction: From Association to Causation&mdash;Why We Need Better Comparisons</strong></h3>
+        <p>Up to this point, most of our empirical analyses have relied on <strong>cross-sectional analysis</strong> using observational data&mdash;we compare many units (people, cities, agencies, states) at a single point in time and estimate how variation in one feature (<strong>X</strong>) relates to variation in another (<strong>Y</strong>).</p>
+        <p>For instance, in last week&rsquo;s module, we examined whether cities with more sworn officers per capita (<strong>X</strong>) tended to have lower crime rates (<strong>Y</strong>). We saw that while cross-sectional relationships can reveal interesting associations, they struggle to support credible causal conclusions.</p>
+        <p>One major challenge is <strong>omitted variable bias</strong>. In our staffing and crime example, cities differ in many ways beyond police staffing: some are wealthier, some have stronger social services, some experience concentrated disadvantage, and others face unique drug markets, tourism flows, or economic trends. Any of these factors&mdash;often called <strong>confounders</strong> (<strong>Z</strong>)&mdash;could influence both staffing and crime. While researchers sometimes attempt to &ldquo;control for&rdquo; confounders, missing even one important factor can distort estimates. And since there are potentially <strong>dozens (OR HUNDREDS)</strong> of plausible confounders, the &ldquo;just control for everything&rdquo; approach can quickly become a fool&rsquo;s errand.</p>
+        <p>A second problem is <strong>reverse causation</strong>. With cross-sectional data, it is often unclear which variable is causing which. Back to the example&mdash;maybe higher crime leads cities to hire more officers, rather than increased staffing reducing crime, and not the other way around? With only a single snapshot of data, it is impossible to know what came first.</p>
+        <p>So what, exactly, is the root of the cross-sectional problem? Put simply: <strong>Cross-sectional analyses force us to make causal claims by comparing (i) fundamentally dissimilar units at (ii) a single point in time.</strong> Both of these features give rise to biased estimates.</p>
+        <p>In this module, we break down why those comparisons fail and introduce the research design logic that helps us escape those traps. Before we get to methods, we must first understand principles&mdash;how to build better comparisons that make causal claims more credible. The rest of this course will introduce specific designs that follow directly from these principles and will allow you&mdash;as a researcher&mdash;to move from descriptive patterns to argument defensibly about cause and effect.</p>
+        <p><em>This module is a bit abstract. Breathe.</em></p>
+        <h3><strong>The Problem with Dissimilar Units</strong></h3>
+        <p>If we could compare alike units&mdash;<strong>units that are the exact same except in how their values of the independent variable (and subsequent dependent variable)</strong>&mdash;cross-sectional analysis would NOT be problematic (for the very same reasons it&rsquo;s not problematic for analyzing experimental data)&mdash;and any inferences we drew would be valid.</p>
+        <p>For example, if two cities were identical in every meaningful way&mdash;same population, same socioeconomic conditions, same governance structures, same levels of community trust, same local economy, same history of crime&mdash;and they differed only in police staffing, then comparing their crime rates would give us a credible estimate of the effect of staffing on crime. <strong>Why? Because the only thing different between the cities is staffing? So, if crime somehow is different (after the staff changes), then it must have been a result of staffing changes.</strong> Easy peasy.</p>
+        <p>But the real world does not give us comparisons like that. Cities, agencies, and states differ in deep and consequential ways. They differ in political culture, economic opportunity, levels of inequality, tax base, demographic structure, and institutional strength. Even worse, they vary in ways we can&rsquo;t perceive or know. These differences exist before any policy change&mdash;and many of them are also related to the policy decisions we study.</p>
+        <p>Take our example: cities with more police officers are often not just &ldquo;more staffed.&rdquo; They are:</p>
+        <ul>
+            <li>Larger and more densely populated,</li>
+            <li>More economically unequal,</li>
+            <li>More politically pressured by crime,</li>
+            <li>More likely to have complex gang or drug markets,</li>
+            <li>More likely to have higher baseline crime.</li>
+        </ul>
+        <p>These differences&mdash;not staffing&mdash;may explain patterns of crime and staffing. And if they do, then any comparison across unalike units will confuse correlation for causation. The problem isn&rsquo;t that cities differ&mdash;that&rsquo;s natural. The problem is that cross-sectional comparisons force us to compare units that were never comparable in the first place. And when the comparison is broken, no statistical model can fix it afterward.</p>
+        <h3><strong>The Problem with a Single Point</strong></h3>
+        <p>Cross-sectional analysis also limits us because it gives us only a single snapshot of the world. When we observe units at just one moment, we cannot see how they got there or which way they were already moving. That can make it difficult to tell what is causing what.</p>
+        <p>In our staffing and crime example, if City A has more officers and less crime than City B at a single point in time, we cannot conclude staffing reduced crime. Crime in City A may have already been falling before staffing increased. Or City B may have recently experienced a surge in gang activity unrelated to staffing. With only one time point, we cannot tell whether staffing affected crime&mdash;or whether crime trends influenced staffing.</p>
+        <p>The deeper issue is this: cross-sectional comparisons prevent us from observing change within units. And if we cannot see how a city, agency, or school district changes over time, we cannot make a credible claim about cause and effect. Causal relationships involve change, and single snapshots cannot reveal it.</p>
+    </div>
+    <hr style="border-top: 3px solid orange;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px; margin-bottom: 20px;">
+        <h3><strong>Dealing with &ldquo;Dissimilar Units&rdquo; Through Better Comparison Groups</strong></h3>
+        <p>If the problem begins with unfair comparisons&mdash;that is, not comparing like to like (giving rise to omitted variable bias)&mdash;then the solution is not to statistically adjust those comparisons but to improve them at the design stage. This is the core shift from traditional regression thinking to causal inference thinking. Instead of asking, &ldquo;What variables do I need to control for?&rdquo; we begin asking a different question: how can I obtain a sample that is comparable in all respective ways (besides X).</p>
+        <p>This shift reframes causal research. Rather than treating confounding as a technical afterthought, it treats it as a design problem. Instead of fighting bias with longer (ahem, never ending) lists of control variables, we work to <strong>reduce bias before analysis</strong> by carefully selecting a sample that is inherently comparable&mdash;they just vary in one way: the independent variable.</p>
+        <p>With this design logic, we begin looking for naturally occurring structures in the world that help create better comparisons. These structures do not eliminate bias completely (rarely are they ever PERFECTLY comparable)&mdash;but they can drastically reduce it, often more effectively than control variables ever could.</p>
+    </div>
+    <hr style="border-top: 3px solid orange;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px; margin-bottom: 20px;">
+        <h3><strong>Design Strategy 1: Rethinking Cross-Sectional Observational Designs by Improving Comparisons (i.e., Improving &ldquo;Like to Like&rdquo; Comparisons)</strong></h3>
+        <p>In Week 3, we saw why most cross-sectional observational designs struggle with causal inference: they compare fundamentally dissimilar units, often at just one point in time, and rely on regression to adjust for differences that were never well-structured to begin with. But not all cross-sectional designs are created equal. If we change the way we think about comparison, we can improve our inferences even when working within the limits of observational data.</p>
+        <p>This section introduces the first strategy that many techniques&mdash;including those taught in this course (!)&mdash;try to leverage: <strong>comparing like to like</strong>. The goal is simple but powerful: if we can structure a comparison so that the groups we&rsquo;re comparing (i.e., those that vary on some value of X) are similar in every meaningful way except for the factor we&rsquo;re studying, then differences in outcomes are more likely to reflect the influence of that factor.</p>
+        <p>This is not a specific method or statistical technique&mdash;it&rsquo;s a <em>design logic</em>. And while it doesn&rsquo;t solve every inferential problem, it marks a crucial shift from relying on statistical control to building better comparisons up front.</p>
+        <h4><strong>Why &ldquo;Like to Like&rdquo; Matters</strong></h4>
+        <p>The underlying rationale is straightforward: the more similar two units are before they differ on the key factor we&rsquo;re studying, the more confidently we can attribute later differences in outcomes to that factor. This logic mirrors the principles behind randomized experiments, where comparison groups are intentionally balanced up front&mdash;but it can be applied in observational settings by deliberately improving who gets compared to whom.</p>
+        <p>In poorly designed cross-sectional studies, comparisons are often made across units&mdash;cities, agencies, individuals&mdash;that differ in dozens of ways. Regression models attempt to adjust for these differences after the fact, but if the comparison itself is flawed, the model remains biased.</p>
+        <p>By contrast, when we intentionally compare units that were already similar prior to variation in the factor of interest, we reduce bias at the design stage and make the resulting inferences more credible.</p>
+        <h4><strong>Ways to Improve Comparisons in Cross-Sectional Observational Studies</strong></h4>
+        <p>There are many paths to creating better &ldquo;like-to-like&rdquo; comparisons&mdash;none perfect, but all useful. Here are three of the most common strategies (we&rsquo;ll use examples in a sec to illustrate &ldquo;how to&rdquo;):</p>
+        <ul>
+            <li><strong>Narrow the sample </strong>to peer groups: Limit the comparison to units that are already similar on key dimensions. For example, rather than comparing all U.S. cities, compare only mid-sized cities in a single region with similar demographics or governance structures.</li>
+            <li><strong>Use natural boundaries or geographic borders</strong>: Leverage geography to compare units that operate in similar policy environments or markets. Cities on either side of a state line often face similar conditions&mdash;except one might be exposed to a policy change the other is not.</li>
+            <li><strong>Exploit policy thresholds or rules</strong>: Many programs use clear cutoffs&mdash;population limits, income thresholds, or eligibility rules&mdash;that divide nearly identical units into treated and untreated groups. These discontinuities can create strong quasi-experimental comparisons even in cross-sectional settings.</li>
+        </ul>
+        <p>These strategies all reflect a core shift in logic: <strong>don&rsquo;t start with the full dataset and try to statistically control your way to causality. Instead, think like a designer. Who is truly comparable? Why?</strong> And how can we structure the comparison so that the treatment&mdash;not underlying differences&mdash;is doing the explanatory work?</p>
+        <h4><strong>Applied Illustration: Trimming for Comparability</strong></h4>
+        <p>To bring this design logic to life, let&rsquo;s walk through a practical example. Suppose we have data from five different groups&mdash;perhaps cities, agencies, or policy jurisdictions. We&rsquo;re interested in whether a variable X (say, staffing levels) affects an outcome Y (like crime&mdash;I swear we will move on to other examples after this week).</p>
+        <p>If we estimate the relationship using all five groups, the overall effect looks <strong>slightly positive</strong>. But if we zoom in on one group&mdash;say, a set of large, high-density cities&mdash;we find a <strong>clear negative relationship</strong> between X and Y. That negative effect is completely masked when we include all groups in a pooled analysis.</p>
+        <ul>
+            <li><strong>Figure 1</strong> shows the full sample. Observations are color-coded by group, and the black line represents the overall relationship. It's nearly flat&mdash;or even slightly positive.
+                <p style="text-align: center;"><img id="28529643" src="https://utk.instructure.com/courses/242597/files/28529643/preview" alt="Scatter plot showing multicolored dots with a slight positive trend line, titled &quot;Comparing the Effect of X on Y Across Dissimilar Groups.&quot;" width="623" height="373" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28529643" data-api-returntype="File" /></p>
+            </li>
+            <li><strong>Figure 2</strong> isolates just the one subgroup with a meaningful negative relationship. The trend becomes immediately clear.
+                <p style="text-align: center;"><img id="28529642" src="https://utk.instructure.com/courses/242597/files/28529642/preview" alt="Scatter plot showing a negative correlation with red dots and a downward-sloping black trend line." width="623" height="373" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28529642" data-api-returntype="File" /></p>
+            </li>
+        </ul>
+        <p>What changed? Not the data-generating process&mdash;but the comparison group. By narrowing the sample to more &ldquo;like&rdquo; units (i.e., trimming the dataset for comparability), we removed irrelevant heterogeneity and revealed the underlying causal story that was previously obscured.</p>
+        <p>This is the heart of quasi-experimental design thinking. Instead of starting with everything and adjusting later, we rethink <strong>who gets compared to whom</strong>. By improving comparisons up front&mdash;even in observational data&mdash;we get closer to the kinds of clean, credible inferences that experiments aim to produce.</p>
+        <p>Of course, this isn&rsquo;t perfect. Trimming the sample can limit generalizability, and subgroup analysis can&rsquo;t solve problems like reverse causation. But it&rsquo;s a meaningful improvement over comparing apples to oranges&mdash;and it reflects a shift from post-hoc control to up-front design.</p>
+        <h4><strong>Illustrative Examples</strong></h4>
+        <ol>
+            <li><strong>Card &amp; Krueger (1994): Narrow the Sample through Using Natural Boundaries</strong><br />
+                <p>In 1994, Card and Krueger wanted to assess whether raising the minimum wage (<strong>X</strong>) impacted employment (<strong>Y</strong>). To do so, they needed to compare states that had raised wages to those that had not. But states differ in so many ways&mdash;so instead, they focused on restaurants in <strong>border counties between New Jersey</strong> (which raised wages) and <strong>Pennsylvania</strong> (which didn&rsquo;t).</p>
+                <p>These restaurants:</p>
+                <ul>
+                    <li>Drew from the same labor pool</li>
+                    <li>Faced similar economic conditions</li>
+                    <li>Operated in the same regional market</li>
+                </ul>
+                <p>By narrowing the comparison to units already similar across many dimensions, they reduced confounding and strengthened the causal claim.</p>
+                <p>What did they find? Contrary to standard economic models that predicted job losses, they found: No evidence of reduced employment in New Jersey.&nbsp; If anything, employment slightly increased in NJ fast-food restaurants relative to PA. I particular, full-time equivalent employment rose in NJ post-policy.</p>
+            </li>
+            <li><strong>Dynarski (2003): A Natural Policy Cutoff for College Aid</strong><br />
+                <p>Sometimes, policy rules draw sharp lines&mdash;and those lines can be exploited to generate credible causal comparisons. Dynarski (2003) takes advantage of one such line: a rule that restricted access to Georgia&rsquo;s HOPE scholarship based on date of birth.</p>
+                <p>Specifically, students born after a certain cutoff date were eligible for generous college tuition subsidies, while those born just before it were not. These students were otherwise nearly identical&mdash;they lived in the same state, attended similar schools, and came from the same communities. The key difference was whether they just missed or just made the aid deadline.</p>
+                <p>By comparing college attendance and completion rates on either side of the cutoff, Dynarski shows that eligibility for aid had a large positive effect on both outcomes. Crucially, because this &ldquo;assignment&rdquo; to aid depended on a rule-based threshold&mdash;not student choices&mdash;the comparison is more credible than typical observational studies.</p>
+                <p>In essence: two similar groups, separated by an arbitrary policy rule, help us isolate the causal effect of financial aid on college decisions.</p>
+            </li>
+        </ol>
+        <p>Despite operating in different domains, these studies all apply the same underlying logic:</p>
+        <ul>
+            <li>Identify or construct groups that are as similar as possible prior to the policy change or intervention.</li>
+        </ul>
+        <p>That&rsquo;s it. And that&rsquo;s the foundation of thoughtful research design. No fancy math&mdash;just clearer thinking about what makes a comparison credible.</p>
+        <h4><strong>Limitations of the "Like to Like" Approach</strong></h4>
+        <p>As powerful as this logic is, it&rsquo;s not a silver bullet. Even the best &ldquo;like to like&rdquo; comparisons have limitations:</p>
+        <ul>
+            <li><strong>Perfect comparability is rarely possible.</strong><br />Real-world units always differ in some unobservable ways&mdash;motivation, political context, internal leadership, etc. No strategy can eliminate all confounding.</li>
+            <li><strong>Reverse causation can still be present.</strong><br />If treatment status is influenced by outcomes (or expected outcomes), bias can persist even among well-matched units. For example, cities with rising crime might hire more police even if they're otherwise comparable to cities that don&rsquo;t.</li>
+            <li><strong>Design decisions require tradeoffs.</strong><br />Narrowing the sample improves internal validity but may reduce generalizability. Focusing on units near a threshold may leave out broader policy effects. Also, let&rsquo;s be real&mdash;sometimes its hard to find perfectly comparable groups like this!</li>
+        </ul>
+        <h4><strong>The Bottom Line</strong></h4>
+        <p>Rethinking cross-sectional designs through the lens of comparability doesn&rsquo;t fix every inferential challenge&mdash;but it does help. It moves us from &ldquo;control everything after the fact&rdquo; to &ldquo;design smarter up front.&rdquo; And when done carefully, it can bring observational work closer to the causal logic of experiments&mdash;without needing random assignment.</p>
+        <p>Next, we turn to time as a design tool, exploring how comparing a unit to itself over time can further improve causal credibility.</p>
+    </div>
+    <hr style="border-top: 3px solid orange;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px; margin-bottom: 20px;">
+        <h3><strong>Design Strategy 2: Leveraging Time to Make Better Inferences</strong></h3>
+        <p>So far, we've focused on improving comparisons <em>between units</em>&mdash;between people, cities, agencies, or states. But some of the most powerful causal insights emerge when we compare a unit to itself over time. Rather than comparing two different cities, we ask: <em>What changed in this same city before and after a new policy was introduced?</em></p>
+        <p>This approach solves a major causal challenge: confounding. Many potential confounders&mdash;like political culture, institutional norms, leadership style, or geography&mdash;are constant within a unit. They don&rsquo;t shift dramatically from one year to the next. So when we compare a unit to itself, these stable characteristics effectively cancel out. This is a huge benefit: time allows us to hold constant things we may not even be able to measure.</p>
+        <p>Time also helps with another classic causal problem: reverse causation. In cross-sectional data, it can be hard to tell what caused what&mdash;did better performance lead to a policy change, or did the policy change improve performance? But when we use time and observe that <em>change follows</em> the intervention, we at least begin to put cause before effect. Time gives us a direction.</p>
+        <p>Let&rsquo;s take an example. Say a city rolls out a public health campaign aimed at reducing opioid overdose deaths. If we compare that city to others, we risk comparing apples to oranges. But if we track how overdose rates changed in that city <em>before and after</em> the campaign, we begin to isolate its possible impact. Political context, local income, health infrastructure&mdash;these background factors stay constant. Any major change in outcomes is more plausibly tied to the policy.</p>
+        <p>But time alone isn&rsquo;t enough. Broader shifts&mdash;like national economic recovery or a change in healthcare access&mdash;might influence outcomes in all cities at once. So we need to be smart about how we use time.</p>
+        <h4><strong>Before-and-After Comparisons: Strengths and Shortcomings</strong></h4>
+        <p>The simplest approach is a <strong>before-and-after</strong> design. We observe a key outcome&mdash;like crime, congestion, or dropout rates&mdash;before a change occurs, and then again afterward. If things improve, we might be tempted to credit the change.</p>
+        <p>This logic has one big advantage: <strong>it compares a unit to itself</strong>, holding constant everything that doesn't change. But the downside is that it doesn&rsquo;t tell us what would have happened anyway. For instance, maybe crime was already falling before a policy was introduced. Or maybe a spike in gas prices&mdash;not the new bus route&mdash;is what caused congestion to drop.</p>
+        <p>Without knowing the broader trend, we might mistake correlation for causation.</p>
+        <h4><strong>Combining Time with Thoughtful Comparisons</strong></h4>
+        <p>To address this, we can strengthen our logic by pairing time with a comparison. Instead of just asking whether outcomes improved after a change, we ask: <em>Did outcomes improve more than they did elsewhere?</em></p>
+        <p>Suppose one state adopts a hiring reform to professionalize its bureaucracy. Another similar state does not. If both states improve equally, the reform might not be the reason. But if the reforming state improves more, that <em>difference in differences</em> is what gives us causal traction.</p>
+        <p>In public health, the logic is similar. If hospitalizations fall after a smoking ban, that&rsquo;s interesting&mdash;but maybe they were falling everywhere. If they fall <em>more</em> in the state that passed the law, compared to similar states that didn&rsquo;t, that&rsquo;s stronger evidence of impact.</p>
+        <p>This approach helps us:</p>
+        <ul>
+            <li><strong>Hold constant what doesn&rsquo;t change</strong> within units (like geography or institutional history).</li>
+            <li><strong>Control for what changes everywhere</strong>, like national trends or seasonal effects.</li>
+            <li><strong>Isolate what&rsquo;s unique</strong> to the place or group that experienced the change.</li>
+        </ul>
+        <h4><strong>Illustrative Examples</strong></h4>
+        <ol>
+            <li>
+                <p><strong>Wagenaar, Maybee, &amp; Sullivan (1988): Using Time to Evaluate Seatbelt Laws</strong></p>
+                <p>An example of strong design thinking comes from Wagenaar, Maybee, and Sullivan (1988), who examined whether mandatory seatbelt laws actually reduced traffic fatalities. Early critics argued that any observed decline might simply reflect broader improvements in vehicle safety or emergency response systems&mdash;not the laws themselves. So the researchers turned to time.</p>
+                <p>Instead of comparing different states in a single year, they followed eight states over many years&mdash;before and after seatbelt laws were enacted. By tracking each state over time, they could observe whether fatalities declined <em>after</em> the policy change while holding constant each state&rsquo;s stable features&mdash;its geography, culture, and infrastructure.</p>
+                <p>What did they find? In nearly every state, traffic fatalities declined significantly following the introduction of seatbelt laws, even after accounting for national safety trends. The timing of the decline aligned closely with policy adoption, offering compelling evidence that the law&mdash;not unrelated improvements&mdash;was driving the change.</p>
+                <p>The key innovation here wasn&rsquo;t fancy statistics&mdash;it was design. By using time as a built‑in control, Wagenaar and colleagues could compare each state to itself, stripping away many confounding differences that plague cross‑sectional comparisons.</p>
+            </li>
+            <li>
+                <p><strong>Delehanty, Mewhirter, Welch, and Wilks (2017): Compare Within Units Over Time and Across Units with Different Exposure</strong></p>
+                <p>In 2017, Delehanty, Mewhirter, Welch and Wilks asked a pressing question: Does police militarization&mdash;specifically, receiving surplus military equipment from the federal 1033 Program (X)&mdash;increase police violence (Y)? But here's the issue: jurisdictions that receive military equipment differ in all sorts of ways from those that don&rsquo;t. Crime rates, community-police relations, department culture, officer training, local politics&mdash;how do we know the equipment itself is the cause?</p>
+                <p>Their solution was to build a more credible comparison by leveraging both within-unit and cross-unit variation. They compared:</p>
+                <ul>
+                    <li>Police agencies that received large quantities of military equipment to those that received little or none.</li>
+                    <li>Civilian fatalities within each agency before and after they received equipment.</li>
+                </ul>
+                <p>By focusing on change within the same police department over time, the authors could hold constant many unobservable features&mdash;like culture, politics, and long-run strategy. And by comparing this change to what happened in similar agencies without equipment transfers, they could account for broader trends in policing or crime.</p>
+                <p>What did they find? Agencies that received more equipment saw a statistically significant increase in civilian deaths from officer-involved shootings, even after adjusting for crime and demographics. Militarization, it seems, brought real consequences.</p>
+                <p>This study shows how combining within-unit comparisons over time with cross-unit variation in treatment intensity helps strengthen causal claims in observational settings.</p>
+            </li>
+        </ol>
+        <h4><strong>What Time Can&mdash;and Cannot&mdash;Fix</strong></h4>
+        <p>Time is a powerful ally, but it&rsquo;s not a silver bullet. It holds constant things that don&rsquo;t change. But when <em>multiple things change at once</em>, we&rsquo;re back in tricky territory.</p>
+        <p>Say a school district adopts a new reading program, while also hiring new teachers and reducing class sizes. If test scores go up, we don&rsquo;t know which change drove it. Time-based comparisons can&rsquo;t help us disentangle overlapping causes unless we structure the design more carefully.</p>
+        <p>This reinforces a central message: No single strategy solves all causal problems. Good causal inference builds on multiple tools&mdash;space, structure, and time. The strongest designs use time to control for stable confounders, comparison groups to account for trends, and creative structure (like policy rules or cutoffs) to isolate impact.</p>
+    </div>
+    <hr style="border-top: 3px solid orange;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px;">
+        <h3><strong>Wrapping Up and Moving Forward</strong></h3>
+        <p>By now, the core message of this module should be clear: <strong>better comparisons lead to better causal claims</strong>. Cross-sectional regression alone often falls short&mdash;not because it's inherently wrong, but because it too often begins with broken comparisons and tries to fix them after the fact.</p>
+        <p>Design-based inference flips that logic. It asks us to <strong>think carefully about who is being compared, when, and under what conditions&mdash;before we run a model</strong>. Whether we compare similar units across space, observe change over time, or leverage natural thresholds in policy, the goal is the same: get closer to answering, &ldquo;What would have happened otherwise?&rdquo;</p>
+        <p>But that doesn&rsquo;t mean we throw regression out the window.</p>
+        <p>In fact, one of the most important ideas going forward is this:</p>
+        <p><strong>Design and modeling are complements, not substitutes.</strong></p>
+        <p>Good research design gets us closer to credible comparisons. It narrows the gap. It gets rid of the <strong>big bias</strong>&mdash;the stuff that no model can fix. But once we&rsquo;ve designed smarter comparisons, statistical tools can still help us:</p>
+        <ul>
+            <li>Adjust for remaining small differences,</li>
+            <li>Test robustness across subgroups,</li>
+            <li>Quantify uncertainty in our estimates.</li>
+        </ul>
+        <p>In other words: <strong>control is still useful&mdash;but only once the design is sound.</strong></p>
+        <h4><strong>What Comes Next: Bringing the Logic to Life</strong></h4>
+        <p>The rest of this course will walk through a series of methods that take the logic we&rsquo;ve built here and turn it into actionable tools for real-world research.</p>
+        <p>Here&rsquo;s how they map onto the design principles you&rsquo;ve just learned:</p>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 1em;">
+            <thead>
+                <tr style="background-color: #f0f0f0;">
+                    <th style="padding: 8px; border: 1px solid #ddd;"><strong>Design Strategy</strong></th>
+                    <th style="padding: 8px; border: 1px solid #ddd;"><strong>Method You&rsquo;ll Learn</strong></th>
+                    <th style="padding: 8px; border: 1px solid #ddd;"><strong>What It Leverages</strong></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Use time as a tool</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Interrupted Time Series &amp; Fixed Effects + First Difference</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Change within units</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Combine time + structure</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Difference-in-Differences (DiD)</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Parallel trends logic</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Leverage thresholds and cutoffs (like to like)</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Regression Discontinuity (RD)</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">Natural assignment rules</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Each of these methods follows from the design logic we&rsquo;ve built this week: structure your comparisons carefully, then estimate effects precisely<strong>.</strong></p>
+        <h4><strong>Final Thought</strong></h4>
+        <p>If there&rsquo;s one idea to carry with you as we move forward, it&rsquo;s this:</p>
+        <p><strong>Causal inference is not just about statistics. It&rsquo;s about thinking.</strong></p>
+        <p>Great analysis starts long before the model. It starts by asking: <em>Who&rsquo;s being compared? Are they actually comparable? What would have happened otherwise?</em></p>
+        <p>Those are the questions we&rsquo;ll keep asking&mdash;now with sharper tools in hand.</p>
+    </div>
+</div>

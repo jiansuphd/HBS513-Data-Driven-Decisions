@@ -1,0 +1,36 @@
+<div id="dp-wrapper" class="dp-wrapper">
+    <div style="background: #58595B; margin-bottom: 15px; color: #ffffff; text-align: center; display: block;"><img src="https://utk.instructure.com/courses/242597/files/28448703/download" alt=" " width="100%" height="auto" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448703" data-api-returntype="File" /></div>
+    <h2><span style="color: #4b4b4b;"><strong>Estimating Causal Effects with Fixed Effects Models</strong></span></h2>   <hr style="border-top: 3px solid orange;" />
+    <h3><span style="color: #58595b;"><strong><img id="12823656" role="presentation" src="https://utk.instructure.com/courses/242597/files/28448522/preview" alt="" width="60" height="60" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448522" data-api-returntype="File" /> Overview</strong></span></h3>
+    <p>Week 10 introduces Fixed Effects (FE) models, a flexible and widely used approach for analyzing panel data&mdash;datasets where we observe multiple units (cities, agencies, nonprofits) over time. Unlike RD or ITS, which require specific cutoffs or sharp policy shocks, FE works whenever units experience meaningful change from year to year.</p>
+    <p>The core idea is simple: FE compares each unit to <em>itself</em> over time, removing all stable characteristics&mdash;like history, culture, leadership, or geography&mdash;that could otherwise confound results. This makes FE especially useful for studying questions involving staffing, budgets, demographics, performance, and other variables that fluctuate within units. In this module, we&rsquo;ll build the intuition behind FE, walk through an applied example in Stata, and discuss when FE provides credible causal estimates in policy and public administration research.</p>
+    <hr style="border-top: 3px solid orange;" />
+    <h3><img id="12823671" role="presentation" src="https://utk.instructure.com/courses/242597/files/28448393/preview" alt="" width="60" height="60" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448393" data-api-returntype="File" /><span style="color: #58595b;"><strong> Learning Objectives</strong></span></h3>
+    <p>At the end of this week, you will:</p>
+    <ul>
+        <li>Explain how Fixed Effects models identify causal effects by comparing units to themselves over time.</li>
+        <li>Describe the conditions that make FE a valid and powerful design&mdash;and the limitations that come with it.</li>
+        <li>Interpret FE results from statistical output and understand what &ldquo;within-unit&rdquo; effects really mean.</li>
+        <li>Evaluate when FE is an appropriate method for answering policy questions, and when it is not.</li>
+        <li>Recognize the strengths and weaknesses of FE in applied policy and public administration research.</li>
+    </ul>
+    <hr style="border-top: 3px solid orange;" />
+    <h3><span style="color: #58595b;"> <strong><img role="presentation" src="https://utk.instructure.com/courses/242597/files/28448522/preview" alt="Reading icon" width="60" height="60" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448522" data-api-returntype="File" /> Reading</strong> </span></h3>
+    <ul style="padding-left: 40px;">
+        <li><span style="background-color: #fff3cd;">[Instructor Note: Add Link to Readings Here]</span></li>
+    </ul>
+    <hr style="border-top: 3px solid orange;" />
+    <h3><span style="color: #58595b;"> <strong><img role="presentation" src="https://utk.instructure.com/courses/242597/files/28448514/preview" alt="Tasks and Assignments icon" width="60" height="60" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448514" data-api-returntype="File" /> Tasks and Assignments</strong> </span></h3>
+    <ul style="padding-left: 40px;">
+        <li>Review the <strong>Week 10 Lecture</strong>.</li>
+        <li>Complete the <strong>Week 10 Quiz</strong> in Canvas.</li>
+    </ul>
+    <div class="grid-row" style="margin-left: -24px; margin-right: -24px; width: 100%; padding: 12px;">
+        <div class="col-xs-12 col-md-6" style="padding-left: 40px;">
+            <ul style="list-style-type: none; margin-top: 0; padding-left: 0;">
+                <li><a class="btn btn-info" style="background-color: #006c93; width: 95%; text-align: center; margin-bottom: 10px; border-left: 4px solid #e0e0e0; color: #ffffff;" title="Lecture" href="https://utk.instructure.com/courses/242597/pages/week-10-lecture" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-10-lecture" data-api-returntype="Page">Lecture</a></li>
+                <li><a class="btn btn-info" style="background-color: #006c93; width: 95%; text-align: center; margin-bottom: 10px; border-left: 4px solid #e0e0e0; color: #ffffff;" title="Quiz" href="https://utk.instructure.com/courses/242597/quizzes/524304" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/quizzes/524304" data-api-returntype="Quiz">Quiz</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

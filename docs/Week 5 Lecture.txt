@@ -1,0 +1,305 @@
+<div id="dp-wrapper" class="dp-wrapper">
+    <!-- Banner -->
+    <div style="background: #58595B; margin-bottom: 15px; color: #ffffff; text-align: center;">
+        <img src="https://utk.instructure.com/courses/242597/files/28448703/download" alt="Week 5 Banner" width="100%" height="auto" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448703" data-api-returntype="File" />
+    </div>
+
+    <!-- Standardized Divider -->
+    <hr style="border-top: 3px solid orange;" />
+    
+    <h2 style="text-align: center;"><strong>Estimating Causal Effects with Regression Discontinuity</strong></h2>
+    
+    <hr style="border-top: 3px solid orange;" />
+
+    <!-- Section 1: Introduction -->
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px; margin-bottom: 20px;">
+        <p>In Weeks 3 and 4, we saw why traditional OLS regression-based approaches leveraging observational, cross-sectional data presents serious challenges for causal inference: reverse causation is common, and confounders (which there are often a lot of!) can cloud the picture. While statistical controls can help (at least with addressing confounders), we would have to know, perfectly measure, and model every potential confounder, every time. This is a laborious, if not impossible task in many cases that you&rsquo;ll be working on over the course of your career. What to do, what to do?! ☹</p>
+        <p>This week, we explore a strategy that gives us another option: <strong>Regression Discontinuity (RD)</strong>. It allows us to make causal estimates <strong>from observational, cross-sectional data</strong> by leveraging <strong>pre-existing thresholds</strong>&mdash;real-world cutoffs that separate units (people, cities, states, etc.) into two groups. If you care about that separation&mdash;e.g., some people get access to a program (often called a &ldquo;<strong>treated group</strong>&rdquo;) and some don&rsquo;t (&ldquo;<strong>untreated group</strong>&rdquo;); some policy is passed in one area (treated) but not another (untreated)&mdash;and its effect on some outcome (e.g., how that program impacts citizen well-being, or how that policy impacts city prosperity), you&rsquo;re in luck: an RD may be able to give you a great estimate of the impact of a treatment on a given outcome.</p>
+        <p>But here&rsquo;s the trick: RD is only viable when the treatment variable is binary. This method is designed to estimate the impact of a program, policy, or intervention that someone either does or does not receive (again, treatment). It&rsquo;s particularly well suited for contexts like program evaluation or policy analysis, where treatment is assigned based on a known threshold.</p>
+        <p>It&rsquo;s <em>not</em> appropriate for exploring the effects of continuous features (e.g., effect of age measured in years, or income measured in dollars) or where units are free to self-select into treatment conditions (features like party identification or college major). In other words, RD designs only make sense when there is some external (or &ldquo;exogenous&rdquo;) factor that separates units into two, distinct groups.&nbsp;</p>
+        <h4><strong>Too Abstract? Here Are Some Examples:</strong></h4>
+        <p>In the Policy and Public Administration worlds, who gets something and who doesn&rsquo;t is often based on a rule. When this happens, an RD-based approach can be leveraged! For example:</p>
+        <ul>
+            <li>A student becomes eligible for a scholarship if their GPA exceeds 3.5</li>
+            <li>A prisoner becomes eligible for parole only if they are deemed &ldquo;low threat&rdquo;</li>
+            <li>A city receives federal aid if its population is below 50,000</li>
+            <li>A household gets food assistance if income falls below $35,000</li>
+        </ul>
+        <p>In each case, a binary treatment is assigned at a specific threshold&mdash;and that cutoff wasn&rsquo;t created by the researcher, but by the policy or program guidelines.</p>
+        <p>Here&rsquo;s why that&rsquo;s important. <strong>This structure allows us to compare units just above and just below the threshold, who are likely to be very similar in all other ways.</strong> Rather than relying on statistical controls, we design a comparison where units are plausibly equivalent aside from treatment status. In other words, we create a "like to like" comparison using the rules of the world, not our own modeling assumptions. We&rsquo;ll work on building this intuition throughout the module.</p>
+    </div>
+
+    <hr style="border-top: 3px solid orange;" />
+
+    <!-- Section 2: Design Intuition -->
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px; margin-bottom: 20px;">
+        <h3><strong>Understanding the RD Design Intuition</strong></h3>
+        <p>Let&rsquo;s revisit the core strength of the RD approach: it lets us estimate the effect of some exogenous treatment&mdash;due to some cutoff or rule-on some variable of interest that we care about (our dependent variable).</p>
+        <p>To solidify this idea, let&rsquo;s shift to a new example: one that mirrors a real-world governance scenario.</p>
+        <p><em>Suppose a federal infrastructure program offers grant funding to small cities&mdash;but only if their population is under 50,000. </em>That&rsquo;s it. One rule. One threshold.</p>
+        <ul>
+            <li><strong>Cities with 49,999 residents?</strong> Eligible.</li>
+            <li><strong>Cities with 50,001 residents?</strong> Not eligible.</li>
+        </ul>
+        <p>Now ask yourself: what&rsquo;s the difference (on average) between cities with 49,800 people and cities with 50,200? Probably not toooooo much. They&rsquo;re likely similar in wealth, infrastructure needs, governance capacity, and even underlying political dynamics. Any two individual cities may have a lot of differences (just due to random chance) but on average, cities with roughly the same size should be comparable in A LOT of ways (especially relative to cities that vary in size e.g., cities with 50,000 vs. cities with 1,000,000 people).&nbsp;</p>
+        <p>Well, there is <strong>one major difference</strong> between cities with 49,800 people and cities with 50,200 (in our example): one gets federal aid. The other doesn&rsquo;t.&nbsp; That&rsquo;s how we isolate a causal effect: If we see a sudden <strong>jump in the dependent variable</strong><em> </em>(say, public infrastructure investment) at the 50,000 mark, we attribute it to the aid&mdash;not to population differences.</p>
+        <p>This is the core logic of RD: We assume that everything else in the world changes <em>smoothly</em> at the cutoff. If the outcome doesn&rsquo;t change smoothly&mdash;but instead jumps&mdash;we treat that as the effect of treatment.</p>
+        <p>In other words, RD transforms a simple policy rule into a credible research design. But to do this well, we have to be thoughtful about how we set up our regression model&mdash;and how close to the cutoff we&rsquo;re willing to trust the comparison<span style="font-family: inherit; font-size: 1rem;">.</span></p>
+    </div>
+
+    <hr style="border-top: 3px solid orange;" />
+
+    <!-- Section 3: Under the Hood -->
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px; margin-bottom: 20px;">
+        <h3><strong>From Intuition to Estimation: How RDs Work Under the Hood</strong></h3>
+        <p>Now that you&rsquo;ve got the core idea&mdash;that RD lets us isolate a treatment effect by comparing units just above and just below a threshold&mdash;let&rsquo;s sort out how we estimate that effect. We&rsquo;ll do this in theory now, and then work in through an example in the next section.</p>
+        <p>We&rsquo;ll stick with our example: Cities get federal aid if their population is less than 50,000.</p>
+        <p>The 50,000-population demarcation is our <strong>treatment rule</strong>. What we&rsquo;re interested in is whether that treatment (receiving aid) causes some downstream outcome to change&mdash;say infrastructure investment (our dependent variable: Y). &nbsp;</p>
+        <p>To get there, we need to formalize the two key pieces that drive RD estimation<span style="font-family: inherit; font-size: 1rem;">.</span></p>
+        <h4><strong>First&mdash;The Running Variable: Setting the Stage</strong></h4>
+        <p>Every RD design is built around a <strong><em>continuous</em></strong> <strong>running variable</strong>&mdash;sometimes called the forcing variable or the assignment variable. This is the variable that determines which units gets assigned a treatment and which don&rsquo;t.</p>
+        <p>In our example, that&rsquo;s city population.</p>
+        <ul>
+            <li>Cities are "running" along a continuum&mdash;some with small populations, some with large ones.</li>
+            <li>At exactly 50,000, the treatment rule kicks in: cities with population below 50,000 get aid; those above do not.</li>
+            <li>That makes 50,000 the cutoff, or threshold, in the design.</li>
+            <li>In practice, we &ldquo;center&rdquo; the running variable at the cutoff. So now 50,000 becomes 0. A city with a population of 60,000 now has a value of 10,000, whereas a city with a population of 40,000 has a value of -10,000.&nbsp;</li>
+        </ul>
+        <p>It&rsquo;s called a &ldquo;running&rdquo; variable because we can picture cities running (🏃) along the X-axis of a graph, and the cutoff (=0) is the finish line (🏁). Everything hinges on where you land relative to that threshold.</p>
+        <h4><strong>The Treatment Indicator: Who Got the Program?</strong></h4>
+        <p>Next, we define a <strong>binary</strong> treatment variable:</p>
+        <ul>
+            <li>Cities with population &lt; 50,000 get coded as 1 (treated).</li>
+            <li>Cities with population &ge; 50,000 get coded as 0 (not treated).</li>
+        </ul>
+        <p>This is often called <strong>T</strong> or <strong>D</strong>, and it flips on <strong>at the cutoff</strong>.</p>
+        <p>So we&rsquo;ve now structured the problem with two key ingredients:</p>
+        <ul>
+            <li>A <strong>continuous</strong> running variable that determines treatment eligibility</li>
+            <li>A <strong>binary </strong>treatment indicator that switches on at the cutoff</li>
+        </ul>
+        <p>This is what allows us to look for a discontinuity (stats word for &ldquo;abrupt change&rdquo;) in the dependent variable.</p>
+        <h4><strong>Estimating the Effect: What the RD Model Does</strong></h4>
+        <p>To estimate whether treatment changes the outcome, we run a regression of the form:</p>
+        <p style="text-align: center; background-color: #ffffff; padding: 10px; border: 1px solid #ccc; font-family: monospace; font-size: 1.1em;">Yi = &alpha; + &beta;₁Xi + &beta;₂Ti + &beta;₃(Xi &times; Ti) + &epsilon;i</p>
+        <p><strong>Where:</strong></p>
+        <ul>
+            <li><strong>Yi</strong> = outcome of interest (e.g., infrastructure investment)</li>
+            <li><strong>Xi</strong> = running variable, centered at the cutoff (so a population of 50,000 becomes 0)</li>
+            <li><strong>Ti</strong> = treatment status (1 if below the cutoff, 0 otherwise)</li>
+            <li><strong>Xi &times; Ti</strong> = interaction term, allowing different slopes on either side of the cutoff</li>
+        </ul>
+        <p>Let&rsquo;s walk through what each term is doing:</p>
+        <table style="border-collapse: collapse; width: 100%; border: 1px solid #e0e0e0;">
+            <thead style="background-color: #f0f0f0;">
+                <tr>
+                    <th style="padding: 12px; width: 15%; border-bottom: 2px solid #003366;">Term</th>
+                    <th style="padding: 12px; width: 85%; border-bottom: 2px solid #003366;">What It Means</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;"><strong>&alpha;</strong></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Predicted value of the outcome <strong>at the cutoff</strong> for untreated cities (just above 50,000)</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;"><strong>&beta;₁</strong></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Slope of the outcome on population <strong>above the cutoff</strong> (untreated cities)</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0; background-color: #e6f2ff;"><strong>&beta;₂</strong></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0; background-color: #e6f2ff;">The treatment effect: the jump in the outcome at the cutoff. <strong>This is the money maker.</strong> This answers &ldquo;did that treatment cause our Y to jump&rdquo; up or down?</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;"><strong>&beta;₃</strong></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Adjusts the slope <strong>below the cutoff</strong>, allowing it to differ from the slope above</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>When you fit this model, you're really fitting <strong>two separate lines</strong>&mdash;one on either side of the cutoff. The <strong>difference in height at the cutoff</strong> is interpreted as the <strong>causal effect</strong> of treatment. Again, it&rsquo;s all about that <strong>&beta;₂</strong>.</p>
+        <p>In simpler terms: RD fits two trend lines&mdash;one for treated units, one for untreated&mdash;and estimates how much higher (or lower) the treated group is <strong>right at the threshold</strong> (Have I mentioned that it&rsquo;s <strong>&beta;₂</strong>?).</p>
+        <h4><strong>But Remember: Every Estimate Comes with Uncertainty</strong></h4>
+        <p>Just like any regression model, RD analysis doesn&rsquo;t give us <em>exact</em> truths&mdash;it gives us <em>estimates</em>, and those estimates come with <em>uncertainty</em>.</p>
+        <p>You already know this from prior weeks: when we estimate a coefficient like &beta;₂ (our treatment effect), we&rsquo;re estimating the best guess of what that effect would be <strong>in the population</strong>, based on the data we observe in our sample. And just like before, we assess how confident we are in that estimate using two key ideas:</p>
+        <ul>
+            <li><strong>Confidence Intervals:</strong> We usually construct a 95% confidence interval around our estimate of &beta;₂. This interval tells us the range of values we would expect if we repeated this same study again and again with new samples. If the confidence interval doesn&rsquo;t include 0, that&rsquo;s a good sign&mdash;it suggests a real jump in the outcome at the cutoff.</li>
+            <li><strong>p-values:</strong> We also look at the p-value for &beta;₂. A p-value below 0.05 tells us that the observed jump at the threshold is unlikely to have occurred by chance alone. In other words, we&rsquo;d interpret that as a <em>statistically significant</em> treatment effect.</li>
+        </ul>
+        <p>This applies to all coefficients in our model&mdash;not just&nbsp;<strong>&beta;₂</strong>. But it&rsquo;s <strong>&beta;₂ </strong>that we really care about here, because it captures the <strong>discontinuity</strong> at the cutoff&mdash;the causal impact of treatment. So it&rsquo;s where we&rsquo;ll focus most of our attention.</p>
+        <p>Even though RD gives us a strong design for identifying causal effects, we still need to interpret our estimates with humility. If<span style="font-family: inherit; font-size: 1rem;">&nbsp;</span><strong style="font-family: inherit; font-size: 1rem;">&beta;₂</strong><span style="font-family: inherit; font-size: 1rem;"> has a wide confidence interval or a p-value above 0.05, it means we don&rsquo;t have enough precision or evidence to confidently say there was a treatment effect&mdash;</span><em style="font-family: inherit; font-size: 1rem;">even if the point estimate looks big</em><span style="font-family: inherit; font-size: 1rem;">.</span></p>
+        <h4><strong>Why Bandwidth Matters</strong></h4>
+        <p>But here&rsquo;s a major wrinkle: not all cities are equal&mdash;even if we control for population.</p>
+        <p>Imagine comparing:</p>
+        <ul>
+            <li>A city with 10,000 people to one with 90,000 people.</li>
+        </ul>
+        <p style="padding-left: 25px;">They might both be on the correct side of the cutoff, but they&rsquo;re wildly different in other ways.</p>
+        <p>That&rsquo;s why we don&rsquo;t use all the data. We define a bandwidth&mdash;a window around the cutoff&mdash;and only use observations within that window for estimation.</p>
+        <p><strong>Think of bandwidth like a magnifying glass:</strong></p>
+        <ul>
+            <li>A <strong>wide bandwidth</strong> lets in more cities, but increases the risk of bias&mdash;units farther from the cutoff may differ in unobserved ways.</li>
+            <li>A <strong>narrow bandwidth</strong> gives us cleaner comparisons, but with fewer data points&mdash;so our estimates are noisier.</li>
+        </ul>
+        <p>This is a classic bias&ndash;variance tradeoff:</p>
+        <ul>
+            <li><strong>Narrow bandwidth</strong>&nbsp;= high internal validity, more noise</li>
+            <li><strong>Wide bandwidth</strong> = lower noise, more bias</li>
+        </ul>
+        <p>In practice, you&rsquo;ll often try different bandwidths to see how sensitive your results are. There are also tools (like the Imbens-Kalyanaraman or CCT bandwidth selectors) that help choose an &ldquo;optimal&rdquo; bandwidth automatically. We use a simple strategy below.</p>
+        <h4><strong>Summary Before We Apply</strong></h4>
+        <p>Let&rsquo;s pause to summarize the logic of what we&rsquo;re doing:</p>
+        <ul>
+            <li>We leverage a real-world threshold that separates treated and untreated units.</li>
+            <li>We center our running variable on that cutoff.</li>
+            <li>We fit separate lines on either side and ask: is there a jump in the outcome?</li>
+            <li>That jump is our estimate of the treatment&rsquo;s causal effect.</li>
+            <li>We restrict the data using a bandwidth to ensure units are as similar as possible near the threshold.</li>
+        </ul>
+        <p>Once you understand this structure, you&rsquo;re ready to actually estimate it. Let&rsquo;s do it.</p>
+    </div>
+
+    <hr style="border-top: 3px solid orange;" />
+
+    <!-- Section 4: Example Application -->
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px; margin-bottom: 20px;">
+        <h3><strong>Example (with code): Estimating and Visualizing the Effect of Federal Aid</strong></h3>
+        <p>Let&rsquo;s now shift from theory to practice. We&rsquo;re going to walk through a simulated dataset (i.e., I made it up) that allows us to estimate the causal effect of federal infrastructure aid on city infrastructure spending using a regression discontinuity design.</p>
+        <p>The dataset simulates the example that we have been working with. It contains data on 2,000 US cities in 2020 (unit of analysis). Cities in the dataset receive federal infrastructure aid if their population is under 50,000. You&rsquo;re interested in whether receiving this aid increases infrastructure investment (the DV: Y).</p>
+        <p>The dataset is included in the &ldquo;additional materials&rdquo; section in this week&rsquo;s module page on canvas. I include some sample code below. Note that we will go through all of this much more rigorously in the lab. This serves as a baseline for now.</p>
+        <h4><strong>Your Key Variables</strong></h4>
+        <p>Your dataset includes:</p>
+        <ul>
+            <li>pop: the population of the city</li>
+            <li>infrastructure: total infrastructure spending (in $ millions)</li>
+            <li>treated: a binary indicator for whether the city is eligible for aid (i.e., population &lt; 50,000)</li>
+        </ul>
+        <h4><strong>Step 1: Creating the Running Variable</strong></h4>
+        <p>The running variable&mdash;the one determining treatment&mdash;is population. But we don&rsquo;t want to use raw population because we care about distance from the cutoff, not absolute size. So, we center it at 50,000:</p>
+        <p style="background-color: #eeeeee; padding: 10px; font-family: monospace; border-left: 4px solid #003366; text-align: center;">gen pop_centered = population - 50000</p>
+        <p>This way, <code>pop_centered = 0</code> represents the threshold. Cities with <code>pop_centered &lt; 0</code> are <strong>treated</strong> (below 50k); and those with <code>pop_centered &gt; 0</code> are <strong>not treated</strong> (above 50k). This makes coefficients easier to interpret and visualizes the policy threshold more clearly.</p>
+        <h4><strong>Step 2: Estimating the RD Effect Without a Bandwidth Restriction</strong><strong>&nbsp;(Full Sample)</strong></h4>
+        <p>Let&rsquo;s run a regression using all 1,000 cities in the sample.</p>
+        <p style="background-color: #eeeeee; padding: 10px; font-family: monospace; border-left: 4px solid #003366; text-align: center;">reg infrastructure c.pop_centered##i.treated</p>
+        <p>This gives us the following (cleaned up for you) output.</p>
+        <p><strong>Key Results:</strong></p>
+        <table style="border-collapse: collapse; width: 100%; border: 1px solid #e0e0e0;">
+            <thead style="background-color: #f0f0f0;">
+                <tr>
+                    <th style="padding: 12px; border-bottom: 2px solid #003366; width: 25%;">Term (With P-Value)</th>
+                    <th style="padding: 12px; border-bottom: 2px solid #003366; width: 75%;">What the Term Means in Theory (Interpretation in Our Case)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;"><strong>&alpha; = 75.3661</strong><br /><em>p = 0.000</em></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">The expected level of infrastructure spending for untreated cities (treated = 0) right at the cutoff (population = 50,000).<br /><strong>&rarr;</strong> A city with exactly 50,000 residents that does not qualify for aid is predicted to spend about $75.4 million on infrastructure.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;"><strong>&beta;₁ = 0.00052</strong><br /><em>p = 0.000</em></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">The expected change in infrastructure spending as population increases for untreated cities (those just above the cutoff).<br /><strong>&rarr;</strong> For cities that do not receive aid, every additional 1,000 people is associated with about $0.52 million more in infrastructure spending. A statistically significant effect.&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0; background-color: #e6f2ff;"><strong>&beta;₂ = 18.893</strong><br /><em>p = 0.000</em></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0; background-color: #e6f2ff;">The treatment effect at the cutoff &mdash; the size of the jump in spending when moving from just above to just below 50,000 population.<br /><strong>&rarr;</strong> Cities just under the cutoff (who get aid) spend on average $18.9 million more than similar cities just over the cutoff &mdash; a statistically significant effect.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;"><strong>&beta;₃ = -0.00009</strong><br /><em>p = 0.104</em></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Difference in slopes below vs. above the cutoff &mdash; do treated cities follow a different trend?<br /><strong>&rarr;</strong> The slope is slightly flatter for treated cities, but this difference is not statistically significant &mdash; so the trend in spending by population looks basically the same on both sides.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p><strong>Bottom Line:</strong> It&rsquo;s all about <strong>&beta;₂</strong>. The jump at the cutoff is real, large, and significant. The program appears to work.</p>
+        <p>We can visualize that (you&rsquo;ll learn in the lab), to get a better picture of what&rsquo;s going on under the hood. <strong>Alpha</strong>, the expected value at the cutoff for untreated units&mdash;here, those after the threshold (i.e., cities with exactly 50,000 people)&mdash;are expected to spend roughly <strong>75 million</strong> in infrastructure per year (<strong>&alpha;</strong>). This jumps up to around <strong>86 million</strong> for cities that just made the cutoff: a difference of about <strong>19 million</strong> (<strong>&beta;₂</strong>). This is a statistically significant jump (p-value &lt;.05).</p>
+        <p><strong>&Beta;₁</strong> shows how increases in population shape spending habits for untreated units (those with populations over 50k&mdash;the slope of the red line), whereas <strong>&beta;₃</strong> reports the difference in slopes between the untreated and treated units (change in slope moving from red line to blue line). In our case, they are both positive, and not distinguishable from one another. I.e., in all cases, regardless of treatment, larger populations mean more spending.</p>
+        <p>That said, in RD-based designs where we care about the effect of a given policy, we rarely care about <strong>&beta;₁</strong> and <strong>&beta;₃</strong>. It&rsquo;s all about that <strong>&beta;₂</strong>, and yes, it is positive and significant. The program works&mdash;it led to more infrastructure investment.</p>
+        <p><img id="28633280" style="display: block; margin-left: auto; margin-right: auto;" src="https://utk.instructure.com/courses/242597/files/28633280/preview" alt="Scatter plot showing infrastructure spending vs population centered at 50,000 cutoff" width="624" height="374" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28633280" data-api-returntype="File" /></p>
+        <h4><strong>Step 3: Estimating the RD Effect Using a Bandwidth Restriction</strong></h4>
+        <p>We now have the foundation for our regression discontinuity (RD) design. We've built intuition, plotted the data, centered our running variable, and estimated a model that lets slopes vary on either side of the cutoff. Now it&rsquo;s time to ask:</p>
+        <p>What if we narrow our window and focus only on cities near the cutoff? This is where bandwidth selection comes into play.</p>
+        <p>Why? RD assumes that cities just above and just below the cutoff are comparable. The farther we move from the cutoff, the less credible this assumption becomes &mdash; other differences (besides treatment status) might influence outcomes.</p>
+        <p>By focusing on observations within a limited range of the cutoff, we:</p>
+        <ul>
+            <li>Increase internal validity (better comparisons)</li>
+            <li>Reduce bias from non-comparable cities</li>
+            <li>Trade off some statistical power for cleaner inference</li>
+        </ul>
+        <p>Let&rsquo;s try it. For a first go, let&rsquo;s draw a window from <strong>45,000 to 55,000</strong> in population. That&rsquo;s 5,000 on either side of the cutoff. Here&rsquo;s how we&rsquo;d implement that in Stata.</p>
+        <p>First, let&rsquo;s generate a variable that =1 if the cities fall within that cutoff (again, more on this in the lab).</p>
+        <p style="background-color: #eeeeee; padding: 10px; font-family: monospace; border-left: 4px solid #003366; text-align: center;">gen bw = 1 if abs(pop_centered) &lt;= 5000</p>
+        <p>Next, let&rsquo;s run the same regression, but only for cities that fall within that bandwidth!</p>
+        <p style="background-color: #eeeeee; padding: 10px; font-family: monospace; border-left: 4px solid #003366; text-align: center;">reg infrastructure c.pop_centered##i.treated if bw==1</p>
+        <p><strong>Key Results (Bandwidth-restricted):</strong></p>
+        <table style="border-collapse: collapse; width: 100%; border: 1px solid #e0e0e0;">
+            <thead style="background-color: #f0f0f0;">
+                <tr>
+                    <th style="padding: 12px; border-bottom: 2px solid #003366; width: 25%;">Term (With P-Value)</th>
+                    <th style="padding: 12px; border-bottom: 2px solid #003366; width: 75%;">What the Term Means in Theory (Interpretation in Our Case)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;"><strong>&alpha; = 74.978</strong><br /><em>p = 0.000</em></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">The expected level of infrastructure spending for untreated cities (treated = 0) right at the cutoff (population = 50,000).<br /><strong>&rarr;</strong> Cities just above the 50k cutoff (not eligible for aid) spend $74.98M on average.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;"><strong>&beta;₁ = 0.0006</strong><br /><em>p = 0.093</em></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">The expected change in infrastructure spending as population increases for untreated cities (those just above the cutoff).<br /><strong>&rarr;</strong> Among untreated cities, each additional 1,000 people is linked to $0.60M more in spending. This slope is marginally significant.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0; background-color: #e6f2ff;"><strong>&beta;₂ = 19.008</strong><br /><em>p = 0.000</em></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0; background-color: #e6f2ff;">The treatment effect at the cutoff &mdash; the size of the jump in spending when moving from just above to just below 50,000 population.<br /><strong>&rarr;</strong> Cities just below the cutoff spend $19.01M more than those just above &mdash; a strong, highly significant treatment effect.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;"><strong>&beta;₃ = -0.0002</strong><br /><em>p = 0.745</em></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Difference in slopes below vs. above the cutoff &mdash; do treated cities follow a different trend?<br /><strong>&rarr;</strong> The slope below the cutoff is slightly flatter, but the difference is <strong>small and not statistically significant</strong>.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>So what changed when we restricted our attention to cities near the cutoff?</p>
+        <p>First, the key effect&mdash;the treatment effect at the cutoff (&beta;₂)&mdash;barely budged. It&rsquo;s still strong (about $19 million) and statistically significant (<em>p</em> &lt; .05). This suggests that the effect we saw earlier wasn&rsquo;t being driven by some big cities way off in the tails. Instead, the federal infrastructure program seems to genuinely increase investment for cities right around the 50,000 population threshold.</p>
+        <p>This is the power of bandwidth restriction: it helps isolate a local treatment effect that&rsquo;s more credible. We&rsquo;re no longer comparing New York to a town of 49,999. We&rsquo;re comparing 49,950 to 50,050 &mdash; cities that look almost identical, aside from their treatment status.</p>
+        <p>It&rsquo;s worth noting that &beta;₁ (the slope above the cutoff) is now only marginally significant (<em>p</em> = .093), and &beta;₃ (difference in slopes below vs. above the cutoff) remains insignificant. In practical terms, that means the lines on either side of the cutoff are roughly parallel&mdash;good news for our design, since it simplifies interpretation. The jump we observe isn&rsquo;t confounded by differing trends in population-spending relationships on either side.</p>
+    </div>
+
+    <hr style="border-top: 3px solid orange;" />
+
+    <!-- Section 5: Assumptions -->
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px; margin-bottom: 20px;">
+        <h3><strong>Assumptions and Limitations Behind Regression Discontinuity (RD)</strong></h3>
+        <p>We&rsquo;ve just walked through how RD works and how to estimate the effect of treatment at the cutoff. But for those results to be trusted as causal, a few background conditions need to hold. These are the assumptions that make RD believable &mdash; and the limitations that help us understand when it&rsquo;s not the right tool.</p>
+        <p>You won&rsquo;t be running formal diagnostics, but knowing the logic behind these helps you think like a designer of causal studies.</p>
+        <h4><strong>Assumption: People Can&rsquo;t Precisely Manipulate the Cutoff</strong></h4>
+        <p>RD assumes that units just above and just below the threshold are essentially the same &mdash; so any jump in outcomes can be attributed to the treatment.</p>
+        <p>But this only works if people can&rsquo;t manipulate their score or status to get over the line.<br />If they can &mdash; say, by fudging income to qualify for a benefit &mdash; then the comparison breaks. We&rsquo;re no longer looking at similar groups.</p>
+        <h4><strong>Assumption: Nothing Else Changes at the Cutoff</strong></h4>
+        <p>The treatment has to be the <em>only</em> thing that changes at the threshold.</p>
+        <p>If multiple policies start at once, or if something else shifts right at the cutoff (like how outcomes are measured), then we can&rsquo;t isolate the treatment effect.</p>
+        <h4><strong>Assumption: The Outcome Would Have Been Smooth Without Treatment</strong></h4>
+        <p>RD assumes that if there were no treatment, the outcome would change smoothly across the threshold.</p>
+        <p>That means if we observe a jump, we can reasonably attribute it to treatment.<br />This is why plots of the outcome against the running variable are so useful &mdash; they let us check whether the lines on either side seem like they would&rsquo;ve connected in the absence of intervention.</p>
+        <h4><strong>Limitation: The Treatment Must Be Binary and the Cutoff Clearly Defined</strong></h4>
+        <p>RD only works when we have a <strong>clear rule</strong> for who gets the treatment (e.g., &ldquo;you get the benefit if your score is below 70&rdquo;) and when that rule divides people into <strong>two groups</strong>: treated and not treated.</p>
+        <p>It doesn&rsquo;t work (always) well for fuzzy cutoffs (although there are designs for that), continuous treatments, or when there's no obvious threshold. This limits the kinds of problems RD can be applied to &mdash; but when it fits, it fits well.</p>
+        <h4><strong>BIG Limitation: Results Are Local &mdash; Not Always Generalizable</strong></h4>
+        <p>RD estimates the effect of treatment <strong>right at the cutoff</strong> &mdash; that is, for people just on either side of the threshold. It doesn&rsquo;t tell us what the treatment would do for people much higher or lower on the running variable.</p>
+        <p>That makes RD great for understanding marginal effects near a decision rule &mdash; but not for making sweeping claims about entire populations.</p>
+    </div>
+
+    <hr style="border-top: 3px solid orange;" />
+
+    <!-- Section 6: Conclusion -->
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px;">
+        <h3><strong>Wrapping Up and Moving Forward</strong></h3>
+        <p>Regression Discontinuity isn&rsquo;t a perfect tool &mdash; but it&rsquo;s a powerful one. It trades breadth for credibility. It won&rsquo;t give you sweeping generalizations, but what it <em>does</em> give you is rare: a transparent, compelling estimate of a causal effect in the wild.</p>
+        <p>Sure, it only captures what happens right at the cutoff. But when those cutoffs exist and are hard to manipulate, RD can show us something we often struggle to find: what a policy or treatment actually does, free from the usual noise and confounding.</p>
+        <p>And while the assumptions matter &mdash; as they always do &mdash; many are visible, testable, and intuitive. We can plot the data, check for manipulation, and show the jump. That transparency makes RD not just rigorous, but persuasive to policymakers and the public.</p>
+        <p>More importantly, RD is just the start. Once we understand the local effect, we can start asking bigger questions:</p>
+        <ul>
+            <li>Does the same logic apply in other contexts?</li>
+            <li>What mechanisms might be driving the jump?</li>
+            <li>What about those &ldquo;fuzzy&rdquo; cutoff designs?</li>
+            <li>Can we combine RD with other designs to strengthen our case?</li>
+        </ul>
+        <p>In short: RD isn&rsquo;t the end of the story &mdash; but it&rsquo;s a very strong chapter. When applied carefully, it offers one of the clearest, most defensible ways to estimate causal effects in complex policy environments. And for researchers and practitioners alike, that&rsquo;s a big win.</p>
+    </div>
+</div>

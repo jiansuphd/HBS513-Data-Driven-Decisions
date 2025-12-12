@@ -1,0 +1,273 @@
+<div id="dp-wrapper" class="dp-wrapper">
+    <div style="background: #58595B; margin-bottom: 15px; color: #ffffff; text-align: center;"><img role="presentation" src="https://utk.instructure.com/courses/242597/files/28448703/download" alt="" width="100%" height="100%" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448703" data-api-returntype="File" /></div>
+    <hr style="border-top: 3px solid orange;" />
+    <h2 style="text-align: center;"><strong>Estimating Causal Effects with Difference-in-Differences</strong></h2>
+    <hr style="border-top: 3px solid orange; margin-bottom: 25px;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px; margin-bottom: 20px;">
+        <h3><strong>Introduction: Completing the Causal Toolkit</strong></h3>
+        <p>Over the last few weeks, we&rsquo;ve built up a pretty solid toolkit of research designs that help us get closer to credible causal claims when working with observational data (again, the data that you will <em>surely</em> be working with most in applied policy or administrative realms). We&rsquo;ve built this toolkit slowly, methodically, and&mdash;believe it or not&mdash;in an incredibly intentional fashion.</p>
+        <p>We started with <strong>Regression Discontinuity (RD)</strong>, which gave us a powerful way to exploit cutoffs created by policies or program rules. Then we moved to <strong>Interrupted Time Series (ITS)</strong>, which showed us how to evaluate the impact of a well-timed intervention by examining a break in a single unit&rsquo;s outcome trajectory. Both RD and ITS are fundamentally <em>intervention-based</em> designs: they shine brightest when a policy or program turns on in a sharp, identifiable way and we want to know whether that intervention caused a change.</p>
+        <p>We then transitioned to <strong>Fixed Effects (FE)</strong>, which sits in a different part of the causal-inference universe. FE models are MUCH more flexible, since they don&rsquo;t require a cutoff or a specific intervention date. They simply require panel data (multiple units observed over multiple time periods) and within-unit variation (X and Y have to change within units over time), and they let us compare each unit to itself over time while sweeping away stable, unobserved differences. FE is incredibly useful, but it doesn&rsquo;t, by itself, give us a structured way to evaluate a specific policy change.</p>
+        <p>This week, we return to the world of intervention-based designs, but with a tool that incorporates the strengths of both ITS and FE: <strong>Difference-in-Differences (DiD)</strong>. DiD is one of the most widely used designs in applied public policy and administrative research, precisely because it allows us to study interventions when they affect some units but not others.</p>
+        <p>At its core, DiD answers the following question:</p>
+        <p style="text-align: center; font-style: italic; color: #003366;"><strong>Did the treated units (the cities, states, organizations, or whatever got the intervention&mdash;like a new policy or implemented program) change more (or less) after the intervention than they would have changed if the intervention had never happened?</strong></p>
+        <p>The power of DiD comes from the fact that it uses two types of comparisons simultaneously:</p>
+        <ol>
+            <li>A <strong>within-unit comparison over time</strong> (like ITS, or like FE&rsquo;s &ldquo;compare a unit to itself&rdquo;), and</li>
+            <li>A <strong>between-units comparison that identifies the counterfactual trend</strong> (like FE when we compare many units, or like RD&rsquo;s &ldquo;like-to-like&rdquo; idea).</li>
+        </ol>
+        <p>Here&rsquo;s the idea in plain terms. Suppose a policy is implemented in some cities but not in others. Everyone&rsquo;s outcomes are changing over time&mdash;crime goes up and down, budgets rise and fall, communities shift&mdash;but only some cities actually receive the new policy. We want to know whether the treated cities (again, those that got the policy) changed <em>because of</em> the policy, or whether they simply followed the same underlying forces affecting all cities.</p>
+        <p>This is where the untreated cities become incredibly important. In DiD, the untreated group is not just a &ldquo;comparison group&rdquo; in the usual sense. It is our proxy for the <strong>counterfactual</strong>&mdash;the path the treated group <em>would have followed</em> if it had not been treated. This is the same logic we used in ITS when we extended the pre-intervention trend forward to estimate the &ldquo;no-policy world.&rdquo; But now, instead of using a single unit&rsquo;s pre-trend as the counterfactual, we use the untreated units&rsquo; observed trend.</p>
+        <p>Don&rsquo;t get nervous&mdash;let&rsquo;s think it through. Imagine this. If the treated group jumps by 30 units after the policy, that might sound large (a typical ITS would certainly say so). But what if untreated units jumped by 20 at the same time? Maybe something else happened nationally&mdash;an economic boom, a staffing push, new federal guidelines&mdash;and the treated cities just &ldquo;came along for the ride.&rdquo; In that case, the treatment didn&rsquo;t cause a 30-unit increase. The treatment caused the <strong>extra</strong> 10 units above what would have happened anyway.</p>
+        <p>That 10-point difference? That&rsquo;s the <strong>difference-in-difference</strong>. And this is why the method has &ldquo;two differences&rdquo; built into its name:</p>
+        <ul>
+            <li><strong>First difference:</strong> before vs. after within treated units</li>
+            <li><strong>Second difference:</strong> treated change vs. untreated change</li>
+        </ul>
+        <p>Catching that 10 instead of saying 30 is a big deal. If we credited the full 30 units to the policy, we&rsquo;d be badly overstating its impact (and possibly making very bad decisions based on inflated evidence). DiD&rsquo;s whole purpose is to strip away what would have happened anyway so we don&rsquo;t confuse background trends with real policy effects.</p>
+        <p>Of course, for this logic to work, the untreated group has to be a <strong>reasonable stand-in</strong> for the world in which the treated group never got the intervention. That idea shows up in what we&rsquo;ll eventually call the <strong>parallel trends assumption</strong>&mdash;roughly, the assumption that, absent treatment, treated and untreated units would have moved similarly over time. For now, you don&rsquo;t need to worry about the technical details; just keep in mind that DiD is incredibly powerful, but it rests on a big assumption that make it more or less useful depending on the setting. We&rsquo;ll unpack that assumption (and a few more) later in the module.</p>
+        <p>By the end of this module, you will see how DiD seamlessly merges the ideas from ITS (comparing a unit to itself) and FE (removing stable differences and capturing variation over time). You&rsquo;ll learn to interpret the DiD estimator graphically and algebraically, evaluate whether parallel trends appear <em>plausible</em> in a given dataset, and run DiD models in Stata.</p>
+        <p>Let&rsquo;s roll.</p>
+    </div>
+    <hr style="border-top: 3px solid orange; margin-bottom: 25px;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px; margin-bottom: 20px;">
+        <h3><strong>The Basics of DiD (No math&mdash;okay, well a little addition and subtraction)</strong></h3>
+        <p>Now that we&rsquo;ve laid out why DiD is such a useful tool for studying interventions, we can focus on what the design actually <em>does</em>. And, just like with FE and ITS, the core idea is surprisingly straightforward: <strong>DiD isolates the portion of a treated unit&rsquo;s change over time that cannot be explained by the background changes occurring in untreated units.</strong></p>
+        <p>Another way to say this is: <strong>DiD compares each treated unit to itself and to the world around it</strong>.</p>
+        <p>To see why this works, imagine we are tracking a set of cities over time. Some cities adopt a new policy (say, a use-of-force policy or a new welfare program: these are &ldquo;treated units&rdquo;), while others do not (&ldquo;untreated units&rdquo;). Everyone, treated and untreated alike, is moving through the same larger world: national policies shift, economic conditions evolve, trends rise and fall, and perceptions change. All of these forces affect <em>every</em> city, regardless of treatment.</p>
+        <p>Here&rsquo;s the key idea: <strong>DiD uses the untreated cities to capture all of those background forces</strong>. They tell us what was happening <em>in the absence of the policy</em>. They are our window into the &ldquo;no-policy world.&rdquo;</p>
+        <p>Once we have that, DiD then asks a simple but powerful question: <strong>Did the treated cities change more (or less) than untreated cities changed over the same period?</strong> If they did, that &ldquo;extra&rdquo; change is what we can attribute to the intervention.</p>
+        <p>Here&rsquo;s how the comparison works in practice:</p>
+        <ol>
+            <li><strong>First</strong>, DiD looks at how much the treated units changed from <em>before</em> to <em>after</em> the policy. Did outcomes jump up? Down? Stay flat?</li>
+            <li><strong>Next</strong>, DiD looks at how much the untreated units changed from <em>before</em> to <em>after</em> over that same time period. Remember: these units did not get the policy, so whatever changed for them must reflect broader, background forces!</li>
+            <li><strong>Finally</strong>, DiD subtracts the untreated units&rsquo; change from the treated units&rsquo; change. This subtraction removes the part of the treated units&rsquo; change that would have happened <em>anyway</em>, even without the policy.</li>
+        </ol>
+        <p>This &ldquo;subtraction logic&rdquo; is the big-ole-engine that drives DiD.</p>
+        <p>Let&rsquo;s go back to that example from the beginning now that you have more context. Again, suppose the treated cities&rsquo; outcomes rise by 30 units after the policy. At first glance, that seems huge, maybe even transformational. But if the untreated cities (which did <em>not</em> get the policy) also rise by 20 units during the same period, then much of that 30-unit jump likely had nothing to do with the policy at all. Maybe the national economy improved. Maybe seasonal patterns shifted. Maybe there was a new federal guideline everyone responded to. Who knows <em>what happened</em>, but we KNOW something was going on that was causing units&mdash;regardless of treatment&mdash;to go up by 20 units.</p>
+        <p>In that case, the policy didn&rsquo;t cause 30 units of change&mdash;it caused the <strong>extra 10</strong> on top of the background trend. And that 10-unit difference&mdash;the <strong>difference-in-difference</strong> technically&mdash;is the part we actually care about.</p>
+        <p>This example highlights what DiD is fundamentally built to do: separate (i) movement caused by the intervention from (ii) movement caused by everything else happening in the world.</p>
+        <p>And it also hints at why DiD is so widely used: it gives us a structured, transparent way to filter out all the noise we <em>can&rsquo;t</em> control and isolate the signal we <em>can</em> plausibly attribute to the policy.</p>
+        <p>Okay, one more time for the folks in the back: <strong>DiD works by using untreated units to estimate the treated units&rsquo; no-policy world&mdash;then isolating the part of the treated units&rsquo; change that goes beyond that world.</strong> That&rsquo;s the heart of the design!</p>
+        <p>Let&rsquo;s do it visually.</p>
+    </div>
+    <hr style="border-top: 3px solid orange;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px;">
+        <h3><strong></strong><strong>Graphical Illustration</strong></h3>
+        <p>Before we get to the equations, let&rsquo;s <em>see</em> what a DiD setup looks like. Luckily, DiD has one of the cleanest, most intuitive visuals in all of causal inference. If you can interpret this graph, you already understand 80% of what DiD is doing.</p>
+        <p>Let&rsquo;s focus on this image I ripped from someone&rsquo;s website for the remainder of this section.</p>
+        <p style="text-align: center;"><img id="29005511" src="https://utk.instructure.com/courses/242597/files/29005511/preview" alt="Line graph showing outcome trends over time for intervention and comparison groups, highlighting intervention effects." width="624" height="351" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/29005511" data-api-returntype="File" /></p>
+        <p style="font-size: 0.8em; text-align: center;">Source: Keisha, Figarri. &ldquo;<a class="inline_disabled" href="http://%20https://medium.com/bukalapak-data/difference-in-differences-8c925e691fff" target="_blank" rel="noopener">Difference-in-Differences. Learn Another Method to Determine Treatment Effect via Non-Experimental Data</a>.&rdquo;</p>
+        <h4><strong>Two Groups, Two Lines, One Intervention</strong></h4>
+        <p>Alright, so we have two groups in this figure, right?</p>
+        <ul>
+            <li>the <strong>treated group</strong> (the red line) &mdash; they get the policy or intervention,</li>
+            <li>the <strong>comparison group</strong> (the green line) &mdash; they don&rsquo;t.</li>
+        </ul>
+        <p>Similar to an ITS design, we&rsquo;ve got a time-based running variable on the X-axis: on the left we have earlier periods in the dataset; on the right we have later periods in the dataset. That vertical blue line in the middle marks the moment of the intervention. I.e., it&rsquo;s the moment the policy or program starts (or whatever we are evaluating!) hit. Everything on the left side is <strong>before</strong> the intervention. Everything on the right is <strong>after</strong>.</p>
+        <p>Easy peasy, right?</p>
+        <p>Now look closely at those two lines <strong>before</strong> the intervention happens. They&rsquo;re not equal. They&rsquo;re not on top of each other. One group starts higher. That means that the treated group ALWAYS had higher values of Y than the untreated group. Guess what&mdash;totally fine. They don&rsquo;t have to be perfectly on top of each other for DiD to work. In fact, that&rsquo;s pretty normal in real data.</p>
+        <p>BUT&mdash;and here&rsquo;s the biggie&mdash;notice that the slopes of the lines PRIOR to the intervention were pretty similar. They are moving, drifting, trending in a generally similar way before the policy ever enters the picture.</p>
+        <p>And you can see here: both lines are rising. They&rsquo;re not perfectly parallel &mdash; because nothing in social science ever is &mdash; but they&rsquo;re rising in a <strong>similar-looking way</strong>. That similarity is important, and we'll come back to it later.</p>
+        <h4><strong>Why We Care About These Pre-Intervention Trends</strong></h4>
+        <p>Think of this pre-intervention period as our chance to &ldquo;observe the world before anything special happens.&rdquo; If the treated group is rising by a little each year, and the comparison group is also rising by a little each year, that&rsquo;s a signal that these groups may be responding to the same background forces &mdash; national trends, seasonal cycles, budget climates, whatever is happening out in the world.</p>
+        <p>So if that pattern continues into the future, then the comparison group might actually give us a pretty good sense of: what the treated group&rsquo;s trend would have looked like if the policy had never been adopted.</p>
+        <p>This is the key idea: the comparison group helps us imagine the treated group&rsquo;s &ldquo;no-policy world.&rdquo; In fact, we untreated line&rsquo;s post intervention trend as a stand in for that dotted red line. That ONLY makes sense if these two groups were following a similar path before the intervention.</p>
+        <p>We&rsquo;re not going to formalize that assumption yet &mdash; we&rsquo;ll save that discussion for later &mdash; but visually, that&rsquo;s what this part of the figure is telling us.</p>
+        <h4><strong>Now Look at the Right Side: The Policy Hits</strong></h4>
+        <p>Once we cross that vertical intervention line, something happens to the treated group (the red line). It bends upward WAY more steeply. Maybe it jumps. Maybe outcomes change direction. Whatever it is, you can <em>see</em> a shift.</p>
+        <p>But here&rsquo;s the critical move: we don&rsquo;t compare the red line after the policy to the red line before it. That would be a simple pre-post comparison, and it&rsquo;s almost always misleading.</p>
+        <p>Instead, we look at what the comparison group (the green line) is doing over that exact same period. That green line keeps moving along at basically the same pace it had before. It&rsquo;s still rising gently.</p>
+        <p>So now we have two stories:</p>
+        <ul>
+            <li><strong>Story 1: What actually happened</strong> &mdash; the treated line bends upward (solid red).</li>
+            <li><strong>Story 2: What <em>would have happened</em> without the policy</strong> &mdash; the dotted red line, which simply continues the pre-policy trend the comparison group is showing. AGAIN, NOTE THAT THE SLOPE OF THE DOTTED RED LINE = THE SLOPE OF THE POST-INTERVENTION GREEN LINE IN THE DID MODEL. We use what happened in the untreated units to inform what would have happened with the treated!</li>
+        </ul>
+        <p>That dotted red line is the unobserved counterfactual trend. And it&rsquo;s the star of the entire DiD framework.</p>
+        <h4><strong>The &ldquo;Intervention Effect&rdquo; Is What Effect the Policy CAUSED</strong></h4>
+        <p>The gap &mdash; that vertical distance between the solid red line (what happened) and the dotted red line (what would have happened without the policy) &mdash; <strong>that&rsquo;s</strong> the treatment effect.</p>
+        <p>Not the full height of the red line. Not the total change since the beginning of time. Just that extra bit above the baseline trend the comparison group helps us recover.</p>
+        <p>And here&rsquo;s the beauty of it: the graph shows you that difference visually, long before we touch an equation.</p>
+        <h4><strong>A Quick Note on &ldquo;Parallel Trends&rdquo; &mdash; But Just Enough for Now</strong></h4>
+        <p>If you&rsquo;ve done today&rsquo;s reading, you&rsquo;re probably asking yourself: &ldquo;wait, doesn&rsquo;t DiD require the two lines to be truly parallel before the intervention?&rdquo; And the short answer is: I mean, in practice, no, not literally.</p>
+        <p>What we want (what DiD needs) is that the two groups are moving similarly enough before the intervention that the comparison group can stand in for the treated group&rsquo;s no-policy trend.</p>
+        <p>Perfect parallelism? Never EVER going to happen in the real world. Reasonable similarity? That&rsquo;s what we&rsquo;re looking for.</p>
+        <p>Let&rsquo;s not stress about this for now, we are <strong>not</strong> going to unpack the full assumption here. That comes later, in its own dedicated section. For now, all we need is this simple idea:</p>
+        <p>The pre-intervention trends in both groups help us judge whether the comparison group can plausibly serve as the baseline for the treated group. That&rsquo;s all.</p>
+        <h4><strong>Why this graph matters so much</strong></h4>
+        <p>This little two-line plot is one of the best tools you have as an applied researcher. Before you run a single regression &mdash; before you touch Stata &mdash; you draw this picture.</p>
+        <p>If the lines look reasonably similar before the intervention and then diverge afterwards? Promising.</p>
+        <p>If the lines are already diverging before the policy ever happens? Super duper big red flag.</p>
+        <p>If the lines are wildly different in shape, slope, or pattern? You&rsquo;ll need to rethink your comparison group (get different units perhaps?) or rethink whether DiD is appropriate.</p>
+        <p>This picture tells you whether the entire design has a fighting chance of working.</p>
+    </div>
+    <hr style="border-top: 3px solid orange;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px;">
+        <h3><strong></strong><strong>The Formal Regression Model </strong></h3>
+        <p>Okay, up to now, we&rsquo;ve been talking (maybe a little too casually) about &ldquo;treated units&rdquo; and &ldquo;untreated units,&rdquo; and in the abstract, and that&rsquo;s fine. It&rsquo;s very easy to picture one city that adopts a new policy and one city that doesn&rsquo;t. We&rsquo;ve been leaning on that simple mental model because it helps build intuition. But here&rsquo;s the truth: <strong>Difference-in-Differences is far more flexible than one-treated-one-control.</strong> It can handle many treated units and many untreated units, and in fact, it <em>thrives</em> in that environment.</p>
+        <p>In real applied work, you almost always have lots of units on both sides. A treated &ldquo;group&rdquo; might be 5 cities&hellip; or 50 cities&hellip; or every agency in the state except a handful. Your comparison group might include dozens of similar units that never adopted the policy. And DiD is built for this kind of structure. In many ways, the entire strength of the design comes from having multiple comparison units that can collectively trace out a more stable, believable counterfactual trend (we&rsquo;ll talk later about why this matters so much when we get into parallel trends).</p>
+        <p>Before we get to the model that researchers actually use, I want to show you the version that appears in nearly every introductory econometrics textbook. This is the &ldquo;classic&rdquo; 2&times;2 DiD equation&mdash;the one that assumes exactly one treated group, one untreated group, and exactly one &ldquo;before&rdquo; and one &ldquo;after&rdquo; period:</p>
+        <p style="text-align: center; background-color: #ffffff; padding: 10px; border: 1px solid #ccc; font-family: monospace; font-size: 1.1em;">Y<sub>it</sub> = &beta;<sub>0</sub> + &beta;<sub>1</sub>(Post<sub>t</sub>) + &beta;<sub>2</sub>(Treated<sub>i</sub>) + &beta;<sub>3</sub>(Post<sub>t</sub> &times; Treated<sub>i</sub>) + &epsilon;<sub>it</sub></p>
+        <p>This equation lines up perfectly with the cartoon version of DiD:</p>
+        <ul>
+            <li><code>Treated<sub>i</sub></code>&nbsp;is 1 if the unit is treated.</li>
+            <li><code>Post<sub>t</sub></code>&nbsp;is 1 after the intervention.</li>
+            <li>The interaction&nbsp;<code>Treated &times; Post</code> is where the treatment effect lives.</li>
+        </ul>
+        <p>If you teach DiD using a simple 2&times;2 table, this model fits that tiny world beautifully.</p>
+        <p>But here&rsquo;s the problem: that tiny world almost never exists in real policy research, and DiD isn&rsquo;t even particularly strong when it <em>does</em>. In fact, in a one-treated-unit vs. one-control-unit scenario, DiD can be fragile, noisy, and heavily dependent on whether those two units happened to have similar outcome trends before the policy. And as you can imagine, two units rarely behave like twins&mdash;this is exactly the kind of situation where the parallel trends assumption is hardest to justify.</p>
+        <p>This is part of the reason why DiD is so often introduced badly: the textbook equation is simple, intuitive, and easy to draw, but it is <strong>not</strong> the kind of DiD we use in modern, credible applied work. The design really comes alive when we have:</p>
+        <ul>
+            <li>multiple treated units,</li>
+            <li>multiple comparison units,</li>
+            <li>many years of pre-policy data,</li>
+            <li>many years of post-policy data,</li>
+            <li>shared national or statewide shocks we want to difference out,</li>
+            <li>and stable differences across units that need to be controlled for.</li>
+        </ul>
+        <p>In those settings&mdash;settings with dozens of units and rich panel structure&mdash;the textbook model collapses. It cannot capture meaningful year-to-year dynamics. It cannot handle unit-level baseline differences. It cannot account for national shocks that hit everyone. The &ldquo;Post&rdquo; dummy stops making sense when there are 10 years of time variation. And the &ldquo;Treated&rdquo; dummy cannot account for the enormous differences between units that have nothing to do with the policy.</p>
+        <p><strong>TLDR:</strong> The DiD equation you often see in introductory texts is fine for intuition, but pretty useless in the real world. And, ironically, DiD is <em>least</em> credible in the simple two-unit, two-period setting where it is usually taught. Its assumptions (especially parallel trends) are much easier to justify when you have many treated and many untreated units with richer pre-policy histories.</p>
+        <p>So, we&rsquo;re going to focus on the DiD model that actually works in practice&mdash;the fixed-effects version&mdash;because that is the model you will run in Stata, and that is the model that makes DiD shine. Once we introduce that version, the entire logic you&rsquo;ve seen in the graphs will click into place.</p>
+        <p>Can you tell that I hate the way that DiD is usually taught. Okay, I&rsquo;ll get off my soapbox.</p>
+        <p>When we have panel data, we replace the simple DiD equation with a fixed-effects version.</p>
+        <p>This is why I taught you FE first. The FE DiD model looks like this:</p>
+        <p style="text-align: center; background-color: #ffffff; padding: 10px; border: 1px solid #ccc; font-family: monospace; font-size: 1.1em;">Y<sub>it</sub> = &alpha;<sub>i</sub> + &lambda;<sub>t</sub> + &beta;(Treated<sub>i</sub> &times; Post<sub>t</sub>) + &epsilon;<sub>it</sub></p>
+        <p>At first glance, this looks much simpler. Only one <em>real</em> coefficient!</p>
+        <p>But that&rsquo;s because the fixed effects are now doing the work that &beta;<sub>1</sub> and &beta;<sub>2</sub> used to do. Let&rsquo;s interpret it narratively.</p>
+        <ul>
+            <li><strong>&alpha;<sub>i</sub> (unit fixed effects)</strong> represent each unit&rsquo;s long-run baseline level. Anything stable about a city&mdash;its typical crime rate, political culture, geographic constraints&mdash;is absorbed here. Whether a unit <em>is</em> treated is baked into its baseline, so we don&rsquo;t need a &ldquo;Treated&rdquo; dummy anymore. The fixed effects replace it.</li>
+            <li><strong>&lambda;<sub>t</sub> (time fixed effects)</strong> represent what is happening in each year that affects everyone&mdash;recessions, national waves, seasonal shocks, pandemics, federal policy changes. These absorb everything that the old &ldquo;Post&rdquo; dummy was trying to summarize, but with far more detail and accuracy.</li>
+        </ul>
+        <p>And then there is the star of the show:</p>
+        <ul>
+            <li><strong>&beta;</strong>, the coefficient on Treated &times; Post, is the actual Difference-in-Differences effect. It measures whether treated units experienced <em>more change</em> after the policy than untreated units experienced during that same period, after holding constant:
+                <ul>
+                    <li>their own baselines (unit fixed effects), and</li>
+                    <li>any general year-by-year shifts (time fixed effects).</li>
+                </ul>
+            </li>
+        </ul>
+        <p>This is the regression equivalent of the vertical gap between the solid red line and the dotted red &ldquo;counterfactual&rdquo; line in the graph from the previous section.</p>
+        <p>Students are often surprised that this model reports only one real coefficient, but that&rsquo;s not because the model is &ldquo;missing&rdquo; something. It&rsquo;s because the fixed effects now absorb everything else: the identity of each treated and untreated unit, the identity of each time period, and all the background forces that influence both groups.</p>
+        <p>So let me say it plainly, because this is something that often clicks for students right here. <strong>In most applied DiD work, the only coefficient you interpret is the interaction term. Everything else is taken care of by the fixed effects.</strong></p>
+        <p>To make this concrete, let&rsquo;s look at a quick example.</p>
+        <p>Imagine we run this DiD model on the effect of some policing across cities and its effect on crime. We get:</p>
+        <p style="text-align: center;">&beta; = 8.7</p>
+        <p>How do we interpret that?</p>
+        <p>You would say:</p>
+        <p style="background-color: #e6f2ff; padding: 15px; border-left: 4px solid #003366; font-style: italic;">&ldquo;After accounting for how each city typically differs from each other (that&rsquo;s the unit fixed effects) and after accounting for the year-to-year shocks that hit everyone (that&rsquo;s the time fixed effects), cities that adopted the policy experienced about 8.7 additional crimes per month beyond what they would have experienced if they had simply continued following the same trend as the comparison cities.&rdquo;</p>
+        <p>That &ldquo;extra 8.7&rdquo; is the difference-in-differences. It is the &ldquo;extra jump&rdquo; we saw in the treated line relative to the counterfactual dotted line.</p>
+        <p>Everything else (the fact that some cities are always higher or lower, the fact that 2010 or 2013 or 2017 were unusual nationwide) disappears into the fixed effects, leaving us with exactly the part we care about.</p>
+        <p>And that&rsquo;s the formal DiD Model.</p>
+    </div>
+    <hr style="border-top: 3px solid orange;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px;">
+        <h3><strong>One Major Assumption: Parallel Trends</strong></h3>
+        <p>Okay, I usually save the assumptions chat for after the Stata-stuff, but this one is important. So, and breathe with me&hellip;everything in DiD rests on one big assumption: <strong>parallel trends</strong>. This assumption is what allows us to say that the untreated group&rsquo;s trajectory represents the treated group&rsquo;s &ldquo;no-policy world.&rdquo;</p>
+        <p>In plain language, <strong>parallel trends</strong> means: If the treatment had never happened, the treated units would have continued moving <em>similar to</em> the untreated units.</p>
+        <p>That&rsquo;s it. Not identical. Not perfect. Just <em>similar enough</em>.</p>
+        <p>Remember the dotted red counterfactual line from the graph? Parallel trends is the idea that we can borrow the comparison group&rsquo;s trend (green post intervention line) to draw that red dotted line (we wouldn&rsquo;t know what the heck to put there without the green line). We use the untreated units to tell us where the treated units would have ended up without the intervention. If the trends of the red and green lines pre-intervention ARE NOT comparable, then we can&rsquo;t use that post-intervention line to estimate the red post intervention line (that we don&rsquo;t observe). If the lines DO LOOK SIMILAR pre-treatment, then heck yeah, we can!</p>
+        <p>Now, here&rsquo;s the important part: <strong>parallel trends is like, literally, never true.</strong> Real data are messy. One group will drift upward a bit faster, the other may fluctuate more, and the lines will never be perfectly parallel. That&rsquo;s normal.</p>
+        <p>What matters is <strong>whether the pre-treatment trends look reasonably aligned</strong>&mdash;not identical in level, but similar in direction and shape. Small slope differences (treated rising at +3, control at +2) are common and not automatically fatal. But big divergences, curves going in opposite directions, or widening gaps long before treatment are warning signs that the untreated group is not telling us a credible story about the treated group&rsquo;s counterfactual.</p>
+        <p>This is also why DiD works best with many treated units and many untreated units. More units give you a more stable, reliable baseline trend. In contrast, the simple &ldquo;one treated vs. one control&rdquo; scenario&mdash;the version used in most textbook diagrams&mdash;is actually the <em>least</em> convincing setting for DiD. With only one comparison unit, parallel trends becomes extremely fragile.</p>
+        <p>So the heart of the assumption is this: <strong>Are the untreated units a reasonable guide to what the treated units would have done without the policy?</strong></p>
+        <p>Not perfect. Not exact. Just reasonable.</p>
+        <p>If you can defend that claim&mdash;visually, contextually, and with diagnostics&mdash;then the DiD estimate has meaning. If not, no amount of statistical finesse will rescue it.</p>
+        <p>With that assumption in mind, let&rsquo;s look at how to actually estimate a DiD model in Stata.</p>
+    </div>
+    <hr style="border-top: 3px solid orange;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px;">
+        <h3><strong>Implementation in Stata</strong></h3>
+        <p>Okay--now that we&rsquo;ve built the intuition, looked at the graph, and walked through the regression logic, let&rsquo;s actually estimate a DiD model in Stata. We&rsquo;ll use a fake dataset that&rsquo;s linked on the module page (DiD_data.dta). This dataset contains information from 50 cities from 2010&ndash;2019 where some cities receive a new budget/economic development policy starting in 2015, and others never do. We are interested in how it impacts the city&rsquo;s economic wellbeing.</p>
+        <p>The outcome is an economic development index: &ldquo;econ_dev&rdquo;</p>
+        <p>The key predictors are:</p>
+        <ul>
+            <li><code>treated</code> = 1 if&nbsp;the city ever receives the policy</li>
+            <li><code>post</code> = 1 for years 2015 and beyond</li>
+            <li><code>did</code> = the interaction treated &times; post</li>
+        </ul>
+        <p style="padding-left: 40px;">This isn&rsquo;t in the dataset yet&mdash;we&rsquo;ll make it!</p>
+        <p>We&rsquo;ll follow a simple three-step process:</p>
+        <ol>
+            <li>Load the data</li>
+            <li>Visualize treated vs. control trends</li>
+            <li>Estimate a two-way fixed effects DiD model</li>
+        </ol>
+        <p>Let&rsquo;s walk through each step.</p>
+        <h4><strong>Step 1: Loading that data</strong></h4>
+        <p>Load the data. You know how to do this. Nothing fancy here. Everyone will have something slightly different based on your computer, but something like.</p>
+        <p style="background-color: #eeeeee; padding: 10px; font-family: monospace; border-left: 4px solid #003366; text-align: center;">use "did_budget_econdev.dta", clear</p>
+        <p>Take a gander at the data. Notice that, yes, we have a panel dataset with 50 cities observed over 10 years.</p>
+        <h4><strong>Step 2: Visualize the trends</strong></h4>
+        <p>Don&rsquo;t think about touching the data before assessing the parallel trends assumption. If the pre-policy trends don&rsquo;t look similar, the DiD estimate won&rsquo;t mean much.</p>
+        <p>Here&rsquo;s a simple plot using just fitted lines (to avoid distracting noise):</p>
+        <p style="background-color: #eeeeee; padding: 10px; font-family: monospace; border-left: 4px solid #003366; text-align: center;">twoway lfit econ_dev year if treated == 1 || lfit econ_dev year if treated == 0, xline(2015)</p>
+        <p>This plot is intentionally plain. You&rsquo;ll learn more in 514. I can&rsquo;t bring myself to plug such an ugly graph into a module so I dolled mine up. It should look mostly the same, though. Here&rsquo;s what we can take from this.</p>
+        <ul>
+            <li>Before 2015, treated and control cities drift upward at a very similar rate.</li>
+            <li>Not identical&mdash;not perfectly parallel&mdash;but similar enough to take seriously.</li>
+            <li>After 2015, the treated cities&rsquo; trend bends upward more sharply.</li>
+            <li>That divergence is exactly what DiD measures.</li>
+            <li>The vertical line at 2015 marks the moment the policy kicks in.</li>
+        </ul>
+        <p>In other words, the visual tells the story we <em>hope</em> the regression will confirm.</p>
+        <p style="text-align: center;"><img id="29005510" src="https://utk.instructure.com/courses/242597/files/29005510/preview" alt="Scatter plot with Treated and Control group data from 2010 to 2020 with trend lines." width="624" height="374" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/29005510" data-api-returntype="File" /></p>
+        <h4><strong>Step 3: Create the DiD variable</strong></h4>
+        <p>We now create the key elements of the DiD setup. First, let&rsquo;s tell Stata we are working with panel data.</p>
+        <p style="background-color: #eeeeee; padding: 10px; font-family: monospace; border-left: 4px solid #003366; text-align: center;">xtset city_id year</p>
+        <p>Next, let&rsquo;s make interaction term we care about: (Treated<sub>i</sub> &times; Post<sub>t</sub>)</p>
+        <p style="background-color: #eeeeee; padding: 10px; font-family: monospace; border-left: 4px solid #003366; text-align: center;">gen did = treated * post</p>
+        <p>These variables mean:</p>
+        <ul>
+            <li>Remember, &ldquo;<strong>post</strong>&rdquo; identifies the &ldquo;after&rdquo; period</li>
+            <li>Now, &ldquo;<strong>did</strong>&rdquo; identifies treated &rarr; after observations only</li>
+            <li><strong>did</strong> is the one term we interpret as the causal effect</li>
+        </ul>
+        <p>Everything else&mdash;baseline differences between cities, year-to-year shocks&mdash;gets handled by fixed effects.</p>
+        <h4><strong>Step 4: Estimate the two-way fixed effects DiD model</strong></h4>
+        <p>Here is the workhorse model:</p>
+        <p style="background-color: #eeeeee; padding: 10px; font-family: monospace; border-left: 4px solid #003366; text-align: center;">areg econ_dev did i.year, absorb(city_id) vce(cluster city_id)</p>
+        <p>Let&rsquo;s translate that into English:</p>
+        <ul>
+            <li><code>areg</code>: a command we can use for DiD regressions</li>
+            <li><code>absorb(city_id)</code>:&nbsp;city fixed effects, which control for anything stable about a city</li>
+            <li><code>i.year</code>:&nbsp;year fixed effects, which capture shocks affecting everyone in a given year</li>
+            <li><code>did</code>: our DiD interaction term&mdash;the causal effect</li>
+            <li><code>vce(cluster city_id)</code>:&nbsp;cluster-robust SEs at the city level, which is the correct approach for panel DiD</li>
+        </ul>
+        <p>Don&rsquo;t stress about this. It&rsquo;s just a bit of a correction to the standard errors.</p>
+        <p>This is the exact specification you will use in real applied work.</p>
+        <h4><strong>Interpretation</strong></h4>
+        <p>Your output gave:</p>
+        <p style="text-align: center;">did = 3.81 (SE = 1.22), p = 0.003</p>
+        <p>How do we interpret that?</p>
+        <p>After controlling for stable differences across cities and common shocks across years, cities that received the budget policy saw roughly 3.8 additional units of economic development per year after 2015, beyond what they would have seen if they had simply continued on the same trend as the untreated cities.</p>
+    </div>
+    <hr style="border-top: 3px solid orange;" />
+    <h3><strong>Threats and Solutions</strong></h3>
+    <p>Even with a clean setup and a nice-looking graph, there are a few things that can get a DiD design into trouble. None of these are complicated, but they matter. So let&rsquo;s talk briefly about the most common threats&mdash;and what you can do about them.</p>
+    <p>The biggest threat, of course, is the one we&rsquo;ve already hinted at a dozen times: <strong>bad pre-trends</strong>. If the treated and untreated groups were drifting in very different ways <em>before</em> the policy, then the untreated units can&rsquo;t tell us much about the treated group&rsquo;s no-policy world. In that situation, the DiD estimate is biased&mdash;not because the math is wrong, but because the comparison is unfair. The good news is that this kind of problem usually shows up very clearly in the graph. If the lines are pulling away from each other before the policy ever happens, that&rsquo;s your signal that something deeper is going on.</p>
+    <p>Another issue is nonlinear or unstable pre-trends. If the treated group&rsquo;s outcomes were curving upward (or downward) long before the intervention, while the control group followed a simple straight line, no DiD model&mdash;linear or otherwise&mdash;is going to fix that. These are situations where the groups are just on different trajectories. And that&rsquo;s okay; sometimes the right answer is simply: &ldquo;DiD isn&rsquo;t appropriate here.&rdquo;</p>
+    <p>Sometimes people try to fix mismatched trends by adding <strong>unit-specific linear trends</strong>. This can help <em>a little</em> when the difference between the groups is basically a constant slope shift. But this tool is easy to misuse: if you overfit the trends, you can wipe out the very variation the treatment creates. So use these only when there&rsquo;s a good theoretical reason to believe the difference in slopes is stable and linear, not when you&rsquo;re trying to rescue a fundamentally bad comparison.</p>
+    <p>When the untreated group really isn&rsquo;t a good counterfactual&mdash;and no adjustment seems credible&mdash;the better move is to rethink your comparison group rather than force DiD to work. This is where methods like <strong>synthetic control</strong> come into play: instead of relying on one (or many) untreated units, you build a weighted combination of units that more closely resembles the treated group before the intervention. It&rsquo;s a smarter comparison, not a statistical patch.</p>
+    <p>But the most important practical wisdom is this:</p>
+    <p style="text-align: center; color: #003366;">If the comparison group is wrong, the design is wrong.</p>
+    <p>No amount of modeling can save a fundamentally bad counterfactual. When the trends are too different, the responsible choice is to step back, rethink the groups, or even abandon DiD altogether.</p>
+    <p>That&rsquo;s the whole story. Keep the comparison group credible, keep pre-trends honest, and don&rsquo;t torture the data when it&rsquo;s telling you &ldquo;this design doesn&rsquo;t fit.&rdquo;</p>
+    <hr style="border-top: 3px solid orange;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px;">
+        <h3><strong>Wrapping Up</strong></h3>
+        <p>Alright, we&rsquo;ve covered a lot this week, and&mdash;fitting for a method as widely used as Difference-in-Differences&mdash;we&rsquo;ve approached it from several angles: conceptually, graphically, algebraically, and practically in Stata. You should now have a solid sense of what DiD is trying to do and, more importantly, why it works when it works.</p>
+        <p>Here are the big takeaways to hold onto:</p>
+        <ul>
+            <li><strong>DiD is an intervention-based design</strong>, just like RD and ITS, but it leverages the structure of panel data the way FE does. It&rsquo;s the bridge between the single-unit world of ITS and the multi-unit world of FE.</li>
+            <li>The <strong>untreated group</strong> is not just a comparison group &mdash; it&rsquo;s your best guess at what <em>would have happened</em> to the treated units if the policy had never been adopted. That&rsquo;s the whole game.</li>
+            <li>The <strong>estimate comes from the &ldquo;extra&rdquo; change</strong> in the treated group, not the total change. That&rsquo;s why the 30 vs. 20 &rarr; 10 logic matters so much.</li>
+            <li><strong>Parallel trends</strong> is the one big assumption &mdash; and &ldquo;similar enough&rdquo; is the right standard, not textbook perfection.</li>
+            <li><strong>Two-way fixed effects</strong> give us the real DiD model, and in practice it&rsquo;s all about interpreting that one interaction coefficient.</li>
+            <li><strong>The graph matters.</strong> A lot. Before you run Stata, you look at the pre-trends. Before you interpret a coefficient, you ask whether the comparison group is even plausible.</li>
+            <li>And finally: <strong>not every dataset is a DiD dataset</strong>. When the comparison group is wrong, the design is wrong. That&rsquo;s okay &mdash; that&rsquo;s part of doing applied research thoughtfully.</li>
+        </ul>
+        <p>You&rsquo;ve now seen one of the most important tools in modern public policy analysis. More importantly, you understand <em>how</em> to think about it &mdash; not as a magic trick, not as a regression formula, but as a structured way of answering the counterfactual question that sits at the heart of causal inference.</p>
+    </div>
+</div>

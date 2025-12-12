@@ -1,0 +1,38 @@
+<div id="dp-wrapper" class="dp-wrapper">
+    <div style="background: #58595B; margin-bottom: 15px; color: #ffffff; text-align: center; display: block;"><img src="https://utk.instructure.com/courses/242597/files/28448703/download" alt="Week 7 Banner" width="100%" height="auto" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448703" data-api-returntype="File" /></div>
+    <h2><span style="color: #4b4b4b;"><strong>Interrupted Time Series</strong></span></h2>
+    <hr style="border-top: 3px solid orange;" />
+    <h3><span style="color: #58595b;"> <strong><img role="presentation" src="https://utk.instructure.com/courses/242597/files/28448522/preview" alt="Overview icon" width="60" height="60" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448522" data-api-returntype="File" /> Overview</strong> </span></h3>
+    <p>Week 7&nbsp;introduces Interrupted Time Series (ITS), a design used to estimate the impact of a policy or event when something meaningful happens at a specific moment in time. Instead of comparing different units to one another, ITS compares a unit to <em>itself</em> over time, using the intervention date as a cutoff.</p>
+    <p>When the pre-intervention trend is stable, and the policy is sharp and well-timed, ITS allows us to see whether the outcome changes right when it should. This makes ITS especially valuable for evaluating real-world policies&mdash;laws, mandates, bans, program launches&mdash;that roll out on a known date. In this module, we&rsquo;ll walk through the logic of the design, estimate effects using simulated data, and learn what makes ITS results credible and compelling for public sector decision-making.</p>
+    <hr style="border-top: 3px solid orange;" />
+    <h3><span style="color: #58595b;"> <strong><img role="presentation" src="https://utk.instructure.com/courses/242597/files/28448522/preview" alt="Learning Objectives icon" width="60" height="60" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448522" data-api-returntype="File" /> Learning Objectives</strong> </span></h3>
+    <p>By the end of this module, you will be able to:</p>
+    <ul>
+        <li>Explain how ITS identifies causal effects using a clear intervention date.</li>
+        <li>Describe the essential features that make ITS a valid and interpretable design.</li>
+        <li>Interpret ITS results from both visual plots and regression models.</li>
+        <li>Determine when ITS is an appropriate method&mdash;and when it is not&mdash;for answering policy questions.</li>
+        <li>Recognize the strengths and limitations of ITS in applied public administration and policy analysis.</li>
+    </ul>
+    <hr style="border-top: 3px solid orange;" />
+    <h3><span style="color: #58595b;"> <strong><img role="presentation" src="https://utk.instructure.com/courses/242597/files/28448522/preview" alt="Reading icon" width="60" height="60" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448522" data-api-returntype="File" /> Reading</strong> </span></h3>
+    <ul style="padding-left: 40px;">
+        <li><span style="background-color: #fff3cd;">[Instructor Note: Add Link to Readings Here]</span></li>
+        <li><span style="background-color: #fff3cd;">[Instructor Note: Add Link to Additional Materials Here]</span></li>
+    </ul>
+    <hr style="border-top: 3px solid orange;" />
+    <h3><span style="color: #58595b;"> <strong><img role="presentation" src="https://utk.instructure.com/courses/242597/files/28448514/preview" alt="Tasks and Assignments icon" width="60" height="60" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448514" data-api-returntype="File" /> Tasks and Assignments</strong> </span></h3>
+    <ul style="padding-left: 40px;">
+        <li>Review the <strong>Week 7 Lecture</strong>.</li>
+        <li>Complete the <strong>Week 7 Quiz</strong> in Canvas.</li>
+    </ul>
+    <div class="grid-row" style="margin-left: -24px; margin-right: -24px; width: 100%; padding: 12px;">
+        <div class="col-xs-12 col-md-6" style="padding-left: 40px;">
+            <ul style="list-style-type: none; margin-top: 0; margin-left: 0; margin-right: 16px; padding-left: 0;">
+                <li><a class="btn btn-info" style="background-color: #006c93; width: 95%; text-align: center; margin-bottom: 10px; border-left: 4px solid #e0e0e0; color: #ffffff;" title="Lecture" href="https://utk.instructure.com/courses/242597/pages/week-7-lecture" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-7-lecture" data-api-returntype="Page">Lecture</a></li>
+                <li><a class="btn btn-info" style="background-color: #006c93; width: 95%; text-align: center; margin-bottom: 10px; border-left: 4px solid #e0e0e0; color: #ffffff;" title="Quiz" href="https://utk.instructure.com/courses/242597/quizzes/523440" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/quizzes/523440" data-api-returntype="Quiz">Quiz</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

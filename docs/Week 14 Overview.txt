@@ -1,0 +1,36 @@
+<div id="dp-wrapper" class="dp-wrapper">
+    <div style="background: #58595B; margin-bottom: 15px; color: #ffffff; text-align: center; display: block;"><img src="https://utk.instructure.com/courses/242597/files/28448703/download" alt=" " width="100%" height="auto" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448703" data-api-returntype="File" /></div>
+    <h2><span style="color: #4b4b4b;"><strong>A Quick Assessment of Other Techniques</strong></span></h2>
+    <hr style="border-top: 3px solid orange;" />
+    <h3><span style="color: #58595b;"><strong><img id="12823656" role="presentation" src="https://utk.instructure.com/courses/242597/files/28448522/preview" alt="" width="60" height="60" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448522" data-api-returntype="File" /> Overview</strong></span></h3>
+    <p>Week 14 steps back from the core designs we&rsquo;ve used all semester&mdash;RD, ITS, FE, and DiD&mdash;to introduce several additional methods that analysts turn to when the usual tools fall short. Real-world policy problems don&rsquo;t always give us clean cutoffs, sharp intervention dates, parallel trends, or enough within-unit change to rely on our standard designs. When that happens, methods like matching, instrumental variables, synthetic controls, and staggered adoption designs offer alternative paths to credible causal inference. We won&rsquo;t learn to implement these techniques here. Instead, the goal is to help you recognize what each method is designed to solve, how it works at a high level, and when it might be appropriate in applied policy settings. We&rsquo;ll also highlight qualitative approaches&mdash;tools that uncover mechanisms, context, and implementation details that quantitative analysis alone often misses. Together, these methods broaden your sense of what causal inference can look like in the real world.</p>
+    <hr style="border-top: 3px solid orange;" />
+    <h3><img id="12823671" role="presentation" src="https://utk.instructure.com/courses/242597/files/28448393/preview" alt="" width="60" height="60" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448393" data-api-returntype="File" /><span style="color: #58595b;"><strong> Learning Objectives</strong></span></h3>
+    <p>At the end of this week, you will:</p>
+    <ul>
+        <li>Explain how each additional method&mdash;Matching, IV, Synthetic Control, Staggered Adoption&mdash;addresses gaps left by the core designs covered in this course.</li>
+        <li>Describe the intuition behind these methods and the specific causal problems they are designed to solve.</li>
+        <li>Recognize the limitations and assumptions of each approach, and why they may or may not provide credible causal estimates in applied policy settings.</li>
+        <li>Identify situations in real-world policy and administrative research where these advanced tools are especially useful.</li>
+        <li>Understand how qualitative methods contribute to causal inference by revealing mechanisms, context, and implementation realities that quantitative data alone cannot capture.</li>
+    </ul>
+    <hr style="border-top: 3px solid orange;" />
+    <h3><span style="color: #58595b;"> <strong><img role="presentation" src="https://utk.instructure.com/courses/242597/files/28448522/preview" alt="" width="60" height="60" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448522" data-api-returntype="File" /> Reading</strong> </span></h3>
+    <ul style="padding-left: 40px;">
+        <li><span style="background-color: #fff3cd;">[Instructor Note: Add Link to Readings Here]</span></li>
+    </ul>
+    <hr style="border-top: 3px solid orange;" />
+    <h3><span style="color: #58595b;"> <strong><img role="presentation" src="https://utk.instructure.com/courses/242597/files/28448514/preview" alt="" width="60" height="60" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448514" data-api-returntype="File" /> Tasks and Assignments</strong> </span></h3>
+    <ul style="padding-left: 40px;">
+        <li>Review the <strong>Week 14 Lecture</strong>.</li>
+        <li>Complete the <strong>Week 14 Quiz</strong> in Canvas.</li>
+    </ul>
+    <div class="grid-row" style="margin-left: -24px; margin-right: -24px; width: 100%; padding: 12px;">
+        <div class="col-xs-12 col-md-6" style="padding-left: 40px;">
+            <ul style="list-style-type: none; margin-top: 0; padding-left: 0;">
+                <li><a class="btn btn-info" style="background-color: #006c93; width: 95%; text-align: center; margin-bottom: 10px; border-left: 4px solid #e0e0e0; color: #ffffff;" title="Lecture" href="https://utk.instructure.com/courses/242597/pages/week-14-lecture" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-14-lecture" data-api-returntype="Page">Lecture</a></li>
+                <li><a class="btn btn-info" style="background-color: #006c93; width: 95%; text-align: center; margin-bottom: 10px; border-left: 4px solid #e0e0e0; color: #ffffff;" title="Quiz" href="https://utk.instructure.com/courses/242597/quizzes/520327" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/quizzes/520327" data-api-returntype="Quiz">Quiz</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

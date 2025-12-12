@@ -1,0 +1,141 @@
+<div id="dp-wrapper_0" class="dp-wrapper dp-flat-sections variation-2" data-header-class="dp-header dp-square-right variation-2" data-nav-class="container-fluid dp-link-grid dp-square-right variation-2" data-img-url="https://designtools.ciditools.com/css/images/banner_desert_sky.png">
+    <header class="dp-header dp-flat-sections-main variation-2" style="background-color: #58595b;">
+        <h2 class="dp-heading dp-show-title" style="font-size: 30px;" title="grey orange border-left white circle"><span class="dp-header-pre" style="color: #58595b; border-right-style: solid; border-right-width: 3px; border-color: #ff8200;"><span class="dp-header-pre-1">HBS</span> <span class="dp-header-pre-2">513</span> </span> <span class="dp-header-title text-start">Data Driven Decisions - Spring 2026</span></h2>
+    </header>
+    <div style="background: #58595B; margin-bottom: 15px; color: #ffffff; text-align: center; display: block;"><img id="26469725" role="presentation" src="https://utk.instructure.com/courses/242597/files/27567971/preview" alt="" width="100%" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/27567971" data-api-returntype="File" /></div>
+    <div class="dp-content-block" style="padding: 15px; margin: 0px;">
+        <header class="dp-header dp-header-wrap-s-brdr-b dp-header-wrap-brdr-w-2 dp-header-pre-font-sm dp-header-pre-bg-dp-primary dp-header-pre-brdr-w-0 dp-header-pre-s-brdr-b cp-out-dp-gray" style="border-bottom-style: solid; border-bottom-width: 2px; border-color: rgb(255 130 0);">
+            <h2 class="dp-heading dp-show-title" style="text-align: left; font-size: 30px;"><span class="dp-header-pre" style="background-color: #58595b; margin-left: -10px;"> <span class="dp-header-pre-1">Introduction</span> </span> <span class="dp-header-title">Welcome</span></h2>
+        </header>
+        <p>Welcome to the HBS 513 Canvas site! This site contains all relevant course materials and where you will access and turn in your assignments.&nbsp;</p>
+        <p>The site is organized around a series of modules (one for each week of the course) that can be accessed on the home page. <span style="font-family: inherit; font-size: 1rem;">Each module page contains everything you will need for that week, including readings, written or video lectures, and an associated assignment.&nbsp;</span></p>
+        <p>If you can't find something, please don't hesitate to reach out!</p>
+    </div>
+    <div class="dp-content-block">
+        <div class="dp-column-container container-fluid">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12"><img class="mx-auto d-block dp-margin-direction-tblr" style="border-left: 20px solid #ff8200; border-top: 20px solid #ff8200; width: 200px; height: auto; margin-top: 25px; margin-left: 56px; margin-right: 56px;" src="https://utk.instructure.com/courses/242597/files/27908753/download" alt="" width="auto" height="300" data-name="instructor photo" data-size="26 KB" data-available-range="false" data-hidden="false" data-file-id="27649032" data-filename="instructor_photo.jpg" data-locked="false" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/27908753" data-api-returntype="File" /></div>
+                <div class="col-lg-8 col-md-8 col-sm-12" style="border: none;">
+                    <h3 class="dp-has-icon text-start" style="color: #58595b; font-size: 25px;"><i class="dp-icon fas fa-chalkboard-teacher text-clear cp-out-dp-accent cp-txt-dp-white" style="margin-left: 80px;" aria-hidden="true"><span class="dp-icon-content" style="display: none;">&nbsp;</span></i> Meet the Instructor</h3>
+                    <br />
+                    <div class="dp-user-details-text-wrapper">
+                        <p class="dp-user-details dp-user-name" style="color: #58595b; font-size: 12pt;"><i class="fas fa-user" style="color: #ff8200;"><span class="dp-icon-content" style="display: none; color: #000000ff;">&nbsp;</span></i>&nbsp; Nathan Jeschke</p>
+                        <p class="dp-user-details dp-user-role" style="color: #58595b; font-size: 12pt;" data-content-role="teacher"><i class="fas fa-tag" style="color: #ff8200;"><span class="dp-icon-content" style="display: none; color: #000000ff;">&nbsp;</span></i>&nbsp; Visiting Assistant Professor</p>
+                        <p class="dp-user-details dp-user-email" style="color: #58595b; font-size: 12pt;"><i class="fas fa-envelope" style="color: #ff8200;"><span class="dp-icon-content" style="display: none; color: #000000ff;">&nbsp;</span></i> &nbsp;njeschke@utk.edu</p>
+                        <p class="dp-user-details dp-user-name" style="color: #58595b; font-size: 12pt;"><i class="dp-icon fas fa-calendar" style="color: #ff8200;"><span class="dp-icon-content" style="display: none; color: #000000ff;">&nbsp;</span></i>&nbsp; Book an Online Appointment</p>
+                        <p class="dp-user-details dp-user-name" style="color: #58595b; font-size: 12pt;"><i class="dp-icon fas fa-video" style="color: #ff8200;"><span class="dp-icon-content" style="display: none; color: #000000ff;">&nbsp;</span></i>&nbsp; Zoom Meeting Room</p>
+                    </div>
+                    <p>&nbsp;</p>
+                </div>
+                <img src="https://utk.instructure.com/courses/242597/files/27568061/preview" alt="image.png" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/27568061" data-api-returntype="File" />
+            </div>
+        </div>
+    </div>
+    <hr style="border-top: 1px solid orange;" />
+    <div style="float: left; width: 100%;">
+        <div class="dp-table-scroll">
+            <table class="table-borderless ic-Table ic-Table--striped dp-padding-direction-all" style="border-collapse: collapse; width: 100%; height: 1153px; border-style: none; padding: 5px;" cellspacing="0px" cellpadding="0" data-active-table="true">
+                <tbody class="">
+                    <tr style="height: 68px;">
+                        <th class="align-middle text-center" scope="col"><strong>Week 1</strong></th>
+                        <th class="align-middle text-start" style="height: 68px; width: 70%;" scope="col">
+                            <p><a class="btn btn-outline-secondary cph-bg-dp-gray" style="color: #58595b; border: 2px solid #ff8200;" href="https://utk.instructure.com/courses/242597/pages/week-1-overview-3" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-1-overview-3" data-api-returntype="Page">Course Orientation</a></p>
+                        </th>
+                    </tr>
+                    <tr style="height: 68px;">
+                        <td class="align-middle text-center"><strong>Week 2</strong></td>
+                        <td class="align-middle text-start">
+                            <p><a class="btn btn-outline-secondary cph-bg-dp-gray" style="color: #58595b; border: 2px solid #ff8200;" href="https://utk.instructure.com/courses/242597/pages/week-2-overview-3" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-2-overview-3" data-api-returntype="Page">Getting Reacquainted with Stata</a></p>
+                        </td>
+                    </tr>
+                    <tr style="height: 92px;">
+                        <td class="align-middle text-center"><strong>Week 3</strong></td>
+                        <td class="align-middle text-start">
+                            <p><a class="btn btn-outline-secondary cph-bg-dp-gray" style="color: #58595b; border: 2px solid #ff8200;" href="https://utk.instructure.com/courses/242597/pages/week-3-overview-2" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-3-overview-2" data-api-returntype="Page">Cross-Sectional Data and the Problem of Causal Inference</a></p>
+                        </td>
+                    </tr>
+                    <tr style="height: 68px;">
+                        <td class="align-middle text-center"><strong>Week 4</strong></td>
+                        <td class="align-middle text-start">
+                            <p><a class="btn btn-outline-secondary cph-bg-dp-gray" style="color: #58595b; border: 2px solid #ff8200;" href="https://utk.instructure.com/courses/242597/pages/week-4-overview-3" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-4-overview-3" data-api-returntype="Page">Improving Causal Inference Through Better Comparisons</a></p>
+                        </td>
+                    </tr>
+                    <tr style="height: 92px;">
+                        <td class="align-middle text-center"><strong>Week 5</strong></td>
+                        <td class="align-middle text-start">
+                            <p><a class="btn btn-outline-secondary cph-bg-dp-gray" style="color: #58595b; border: 2px solid #ff8200;" href="https://utk.instructure.com/courses/242597/pages/week-5-overview-2" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-5-overview-2" data-api-returntype="Page">Regression Discontinuity</a></p>
+                        </td>
+                    </tr>
+                    <tr style="height: 68px;">
+                        <td class="align-middle text-center"><strong>Week 6</strong></td>
+                        <td class="align-middle text-start">
+                            <p><a class="btn btn-outline-secondary cph-bg-dp-gray" style="color: #58595b; border: 2px solid #ff8200;" href="https://utk.instructure.com/courses/242597/pages/week-6-overview-2" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-6-overview-2" data-api-returntype="Page">Regression Discontinuity Lab</a></p>
+                        </td>
+                    </tr>
+                    <tr style="height: 68px;">
+                        <td class="align-middle text-center"><strong>Week 7</strong></td>
+                        <td class="align-middle text-start">
+                            <p><a class="btn btn-outline-secondary cph-bg-dp-gray" style="color: #58595b; border: 2px solid #ff8200;" href="https://utk.instructure.com/courses/242597/pages/week-7-overview-2" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-7-overview-2" data-api-returntype="Page">Interrupted Time Series</a></p>
+                        </td>
+                    </tr>
+                    <tr style="height: 68px;">
+                        <td class="align-middle text-center"><strong>Week 8</strong></td>
+                        <td class="align-middle text-start">
+                            <p><a class="btn btn-outline-secondary cph-bg-dp-gray" style="color: #58595b; border: 2px solid #ff8200;" href="https://utk.instructure.com/courses/242597/pages/week-8-overview-2" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-8-overview-2" data-api-returntype="Page">Mid-Term Check-in | Group Lab Help</a></p>
+                        </td>
+                    </tr>
+                    <tr style="height: 68px;">
+                        <td class="align-middle text-center"><strong>Week 9</strong></td>
+                        <td class="align-middle text-start">
+                            <p><a class="btn btn-outline-secondary cph-bg-dp-gray" style="color: #58595b; border: 2px solid #ff8200;" href="https://utk.instructure.com/courses/242597/pages/week-9-overview-2" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-9-overview-2" data-api-returntype="Page">Interrupted Time Series Lab</a></p>
+                        </td>
+                    </tr>
+                    <tr style="height: 68px;">
+                        <td class="align-middle text-center"><strong>Week 10</strong></td>
+                        <td class="align-middle text-start">
+                            <p><a class="btn btn-outline-secondary cph-bg-dp-gray" style="color: #58595b; border: 2px solid #ff8200;" href="https://utk.instructure.com/courses/242597/pages/week-10-overview-2" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-10-overview-2" data-api-returntype="Page">Fixed Effects</a></p>
+                        </td>
+                    </tr>
+                    <tr style="height: 68px;">
+                        <td class="align-middle text-center"><strong>Week 11</strong></td>
+                        <td class="align-middle text-start">
+                            <p><a class="btn btn-outline-secondary cph-bg-dp-gray" style="color: #58595b; border: 2px solid #ff8200;" href="https://utk.instructure.com/courses/242597/pages/week-11-overview-3" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-11-overview-3" data-api-returntype="Page">Fixed Effects Lab</a></p>
+                        </td>
+                    </tr>
+                    <tr style="height: 68px;">
+                        <td class="align-middle text-center"><strong>Week 12</strong></td>
+                        <td class="align-middle text-start">
+                            <p><a class="btn btn-outline-secondary cph-bg-dp-gray" style="color: #58595b; border: 2px solid #ff8200;" href="https://utk.instructure.com/courses/242597/pages/week-12-overview-2" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-12-overview-2" data-api-returntype="Page">Difference-in-Differences</a></p>
+                        </td>
+                    </tr>
+                    <tr style="height: 68px;">
+                        <td class="align-middle text-center"><strong>Week 13</strong></td>
+                        <td class="align-middle text-start">
+                            <p><a class="btn btn-outline-secondary cph-bg-dp-gray" style="color: #58595b; border: 2px solid #ff8200;" href="https://utk.instructure.com/courses/242597/pages/week-13-overview-3" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-13-overview-3" data-api-returntype="Page">Difference-in-Differences Lab</a></p>
+                        </td>
+                    </tr>
+                    <tr style="height: 68px;">
+                        <td class="align-middle text-center"><strong>Week 14</strong></td>
+                        <td class="align-middle text-start">
+                            <p><a class="btn btn-outline-secondary cph-bg-dp-gray" style="color: #58595b; border: 2px solid #ff8200;" href="https://utk.instructure.com/courses/242597/pages/week-14-overview-2" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-14-overview-2" data-api-returntype="Page">A Quick Assessment of Other Techniques</a></p>
+                        </td>
+                    </tr>
+                    <tr style="height: 68px;">
+                        <td class="align-middle text-center"><strong>Week 15</strong></td>
+                        <td class="align-middle text-start">
+                            <p><a class="btn btn-outline-secondary cph-bg-dp-gray" style="color: #58595b; border: 2px solid #ff8200;" href="https://utk.instructure.com/courses/242597/pages/week-15-overview" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-15-overview" data-api-returntype="Page">Final Check-in | Group Lab Help</a></p>
+                        </td>
+                    </tr>
+                    <tr style="height: 68px;">
+                        <td class="align-middle text-center"><strong>Week 16</strong></td>
+                        <td class="align-middle text-start">
+                            <p><a class="btn btn-outline-secondary cph-bg-dp-gray" style="color: #58595b; border: 2px solid #ff8200;" href="https://utk.instructure.com/courses/242597/pages/week-16-overview" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/pages/week-16-overview" data-api-returntype="Page">Final Assignments Due</a></p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>&nbsp;</p>
+        </div>
+    </div>
+    <div id="dpCustomCss"></div>
+</div>
