@@ -1,0 +1,193 @@
+<div id="dp-wrapper" class="dp-wrapper">
+    <div style="background: #58595B; margin-bottom: 15px; color: #ffffff; text-align: center;"><img role="presentation" src="https://utk.instructure.com/courses/242597/files/28448703/download" alt="" width="100%" height="100%" data-api-endpoint="https://utk.instructure.com/api/v1/courses/242597/files/28448703" data-api-returntype="File" /></div>
+    <hr style="border-top: 3px solid orange;" />
+    <h2 style="text-align: center;"><strong>A Quick Assessment of Other Techniques</strong></h2>
+    <hr style="border-top: 3px solid orange; margin-bottom: 25px;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px;">
+        <p>What a long, strange trip it&rsquo;s been.</p>
+        <p>Wayyyyy back in Week 3 (feels like a lifetime ago), we confronted an uncomfortable truth: most of the data we use in public policy is observational and messy, and that makes causal inference <em>hard</em>. Like&hellip; hard hard. The kinds of comparisons we want&mdash;clean, sharp, &ldquo;like to like&rdquo;&mdash;almost never exist naturally in the world. Cities are different. Agencies are different. People are <em>very</em> different. And time? Sometimes it&rsquo;s tricky to make use of it appropriately to figure out how real world relationships unfold.</p>
+        <p>Everything we&rsquo;ve done since then has been one long attempt to escape that problem.</p>
+        <p>At the end of the day, the big challenge in causal inference is simple to state, even if it&rsquo;s difficult to solve: <strong>How do we build comparisons that are fair enough&mdash;and credible enough&mdash;that we can interpret differences in outcomes as evidence of cause and effect?</strong></p>
+        <p>That&rsquo;s it. That&rsquo;s the whole game.</p>
+        <p>Across the last fourteen weeks, we&rsquo;ve slowly built up a toolbox that helps us get there. And while each method has its own quirks, assumptions, unique little requirements, they&rsquo;re (for the most part) trying to do the same two things:</p>
+        <ul>
+            <li><strong>Compare like to like.</strong> Because when our comparison groups look similar, it becomes much easier to interpret differences as real effects&mdash;not artifacts of all the ways those groups differed from the start.</li>
+            <li><strong>Take time seriously.</strong> Because if we don&rsquo;t know what happened before, or how things were changing already, then we can&rsquo;t possibly claim to know what caused what.</li>
+        </ul>
+        <p>Think back to how each method solved this problem in its own way:</p>
+        <ul>
+            <li><strong>Regression Discontinuity (RD)</strong> said, &ldquo;Hey, what if we look right at the cutoff&mdash;right at the boundary where treatment flips on&mdash;and compare units that are nearly identical except for being a smidge above or below some threshold?&rdquo; That&rsquo;s a clean comparison. Like-to-like, engineered by policy rules themselves.</li>
+            <li><strong>Interrupted Time Series (ITS)</strong> said, &ldquo;Let&rsquo;s stop comparing different units altogether and just compare a unit to itself over time.&rdquo; When something meaningful happens at a known moment, we can watch how the trajectory shifts. Same unit. Same underlying features. Just a new intervention layered on top.</li>
+            <li><strong>Fixed Effects (FE)</strong> took a different angle and said, &ldquo;Look, cities and agencies and organizations all differ in deep, stable ways&mdash;and we can&rsquo;t measure half of them. So let&rsquo;s just remove those differences entirely by comparing each unit to itself.&rdquo; All the time-invariant noise (i.e., confounders)? Gone.</li>
+            <li><strong>Difference-in-Differences (DiD)</strong> blended both logics: &ldquo;What if we track treated and untreated units over time, and compare their changes? That way, we get within-unit comparisons <em>and</em> a counterfactual trend.&rdquo; When parallel trends hold, DiD becomes a powerful (maybe our most powerful) machine.</li>
+        </ul>
+        <p>Different tools, same mission: <strong>Find a comparison that&rsquo;s fair enough to help us isolate a causal effect.</strong></p>
+        <p>While these are the foundational tools of a policy or administrative analyst&hellip;they&rsquo;re not the only ones. They are in fact the workhorses (which is why they were deliberately chosen). The hammer and screwdriver of the applied analyst&rsquo;s toolkit. But sometimes, in the real world, you need something more specialized. Something for the weird problems. The cases where no cutoff exists, or time unfolds unevenly, or reverse causation is so tightly baked into the system that even ITS and DiD can&rsquo;t save you.</p>
+        <p>That&rsquo;s what this week is about.</p>
+        <p>This module is <em>not</em> meant to teach you how to run these advanced methods (as I&rsquo;ve said many times this semester&mdash;&ldquo;breathe&rdquo;). Instead, it&rsquo;s meant to show you what else exists, so that when you encounter tricky causal situations in your career, you can look back at this module and know &ldquo;what tools are there to help&rdquo;, even if you&rsquo;ll never code it yourself. Think of this as a guided tour through the &ldquo;specialty tools&rdquo; aisle.</p>
+        <p>Before we wrap up the course, we&rsquo;re going to look at:</p>
+        <ul>
+            <li>Matching</li>
+            <li>Instrumental Variables</li>
+            <li>Synthetic Controls</li>
+            <li>Staggered Adoption Designs</li>
+            <li>And&mdash;finally&mdash;why qualitative approaches matter, too</li>
+        </ul>
+        <p>Let&rsquo;s take a look at each and how they try to solve the same core problem you now know so well.</p>
+    </div>
+    <hr style="border-top: 3px solid orange; margin-bottom: 25px;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px;">
+        <h3><strong>Matching</strong></h3>
+        <p>Matching is one of the oldest and most intuitive tools for improving causal inference with observational data. At its core, matching tries to solve a simple but fundamental problem: treated and untreated units (e.g., cities that &ldquo;get&rdquo; or &ldquo;don&rsquo;t get&rdquo; a policy; organizations that are in charge of &ldquo;implanting&rdquo; or &ldquo;not implementing a program&rdquo;) often look very different from the start. For instance, if cities that adopt a new policy are larger, wealthier, more politically liberal, or already trending upward, then comparing them to cities that look nothing like them is obviously unfair. Matching steps in to create a more credible comparison.</p>
+        <p>The basic idea is surprisingly straightforward: for every unit that receives a treatment (a policy, a program, a reform), we look for untreated units that &ldquo;look similar&rdquo; based on observable characteristics measured <em>before</em> the treatment happens. If a treated city has a population of 250,000, rising crime, and a shrinking budget, we try to compare it to an untreated city that shares very similar same pre-treatment traits. The point is to mimic (albeit imperfectly) the balance we would have had if we had randomly assigned the treatment.</p>
+        <p>There are many flavors of matching (nearest neighbor, propensity score, exact matching, Mahalanobis distance), but the intuition is the same across all of them: reduce apples-to-oranges comparisons by pairing treated units with untreated units that resemble them. Once you have a matched dataset, you compare post-treatment outcomes (Y) between the two groups. If they changed differently afterward, that difference is attributed to the treatment. Huzzah!</p>
+        <p>Matching has a few important strengths. First, it forces you to think hard about what variables matter for selection into treatment, which is a helpful discipline in policy work. Second, it is transparent&mdash;researchers can literally show the balance tables to demonstrate how similar the groups are after matching. Third, matching is flexible and can be combined with regression, FE, or DiD as a preprocessing step to improve comparability.</p>
+        <p>But matching also has serious limitations. It can only adjust for <em>observable</em> characteristics&mdash;whatever you did <em>not</em> measure cannot be balanced. If unobserved factors (like political culture or leadership quality) drive both treatment and outcomes, matching cannot fix that. Matching can also throw away a lot of data if very few good matches exist, leading to inefficiency. And matching does not solve problems of divergent trends over time, so it is not a substitute for methods like DiD when parallel trends are the key concern.</p>
+        <p>Here's the truth that many people (including myself at first). Matching is best understood as a way to improve the quality of comparisons, not a guarantee of causal identification. It makes the treated and untreated groups more alike, which is valuable, but it cannot replace designs that rely on strong temporal or structural assumptions. In other words: matching is a great start, but rarely the finish line.</p>
+        <p>If you want to learn more about matching, here&rsquo;s a VERY good lecture about it. Focus on the first part where he (Gary King&mdash;a data legend), describes the broader logic of matching as opposed to the details of his specific brand.</p>
+        <p style="text-align: center;"><a class="inline_disabled" href="https://youtu.be/rBv39pK1iEs?si=T2wAp0l06L3Oq-j8" target="_blank" rel="noopener"><em><strong>Gary King, "Why Propensity Scores Should Not Be Used for Matching"</strong></em></a> - Methods Colloquium (1:00:55)</p>
+        <div class="dp-embed-wrapper" style="text-align: center;"><iframe class="lti-embed" style="width: 640px; height: 480px;" title="Gary King, &quot;Why Propensity Scores Should Not Be Used for Matching&quot;" src="https://www.youtube-nocookie.com/embed/rBv39pK1iEs?feature=oembed&amp;rel=0" width="640" height="480" loading="lazy" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen" allow="geolocation *; microphone *; camera *; midi *; encrypted-media *; autoplay *; clipboard-write *; display-capture *"></iframe></div>
+    </div>
+    <hr style="border-top: 3px solid orange;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px;">
+        <h3><strong>Instruments</strong></h3>
+        <p>By now, you&rsquo;ve probably noticed that most of the tools we&rsquo;ve learned&mdash;RD, ITS, FE, DiD&mdash;are all trying to help us do one big thing: get the direction of causality right. If we can show that X changed <em>before</em> Y changed, and that nothing else big interfered, we can start making credible causal claims. That&rsquo;s why time is so valuable. It gives us leverage. It helps us rule out the possibility that Y was quietly nudging X the whole time.</p>
+        <p>But sometimes, even using time-based data isn&rsquo;t enough. Sometimes X and Y are so tightly intertwined that they move together almost instantaneously. One reacts to the other, the other reacts back, and suddenly you&rsquo;re in a situation where&mdash;even with panel data, even with pre-trends, even with careful design&mdash;you still can&rsquo;t confidently say which variable is driving which.</p>
+        <p>This is where Instrumental Variables (IV) enter the story.</p>
+        <p>IV exists for one specific purpose: <strong>to help us identify a causal effect when reverse causation is so baked into the system that nothing else can cleanly separate X from Y.</strong></p>
+        <p>Think of cases like these:</p>
+        <ul>
+            <li>Crime affects police staffing at the same time staffing affects crime</li>
+            <li>Budgets respond to agency performance as that performance responds to budgets</li>
+            <li>Health interventions target the sickest populations while simultaneously trying to improve their health</li>
+        </ul>
+        <p>These relationships are knots&hellip;tight ones. And when the knot is too tangled for RD, or ITS, or DiD to unravel, IV tries something different. Instead of wrestling directly with the X&ndash;Y relationship, it goes looking for a third variable (Z), that helps untie the knot from the outside.</p>
+        <p>Here&rsquo;s the intuition: IV asks, <em>&ldquo;Is there something in the world that pushes X around for reasons that have nothing to do with Y?&rdquo;</em> If we can find that thing (a policy rule, a natural shock, a regulation, a quirky formula) then we can use it to isolate the portion of X&rsquo;s movement that causes Y directly (and not the other way around). That little slice of variation becomes our window into causality.</p>
+        <p>In practice, the process is simple in concept:</p>
+        <ol>
+            <li>Find Z, a variable that affects X, but does NOT impact Y <em>directly</em> (even a little bit)</li>
+            <li>It can only impact Y THROUGH X</li>
+            <li>Use Z to extract the &ldquo;clean&rdquo; part of X.</li>
+            <li>Estimate the effect of that cleaned X on Y.</li>
+        </ol>
+        <p>That&rsquo;s it. IV gives us leverage over the part of X that isn&rsquo;t polluted by reverse causation (or hidden confounders).</p>
+        <p>Sounds like a miracle right? It magically gets us out of reverse causation and omitted variable bias! And if you find a true instrument, yeah, its kind of a miracle. But here&rsquo;s the lesson that every researcher learns one day (and often painfully): IV is finicky. Incredibly finicky. Good instruments are rare, and the whole method rests on an assumption we can never truly verify (the &ldquo;exclusion restriction&rdquo;: Z can&rsquo;t affect Y except through X). And when the instrument is weak&mdash;meaning it barely nudges X at all&mdash;the estimates can go sideways fast.</p>
+        <p>So why learn about IV?</p>
+        <p>Because sometimes you&rsquo;ll face problems where nothing else works. Where timing alone can&rsquo;t save you. Where every design you&rsquo;ve tried still leaves you wrestling with a world in which X and Y talk to each other constantly. In those moments, if you can find even a halfway decent Z, IV gives you one of the only remaining paths forward.</p>
+        <p>That&rsquo;s why it belongs in your conceptual toolkit&mdash;not because you&rsquo;ll use it every day, but because when you <em>need</em> it&hellip; you&rsquo;ll really need it.</p>
+    </div>
+    <hr style="border-top: 3px solid orange;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px;">
+        <h3><strong>Synthetic Controls</strong></h3>
+        <p>By now you know that Difference-in-Differences can be an incredibly powerful design&mdash;when the treated and untreated units were moving in parallel before the intervention. That&rsquo;s the whole logic. If untreated units show us what the world would have looked like for the treated group in the absence of treatment, then comparing their changes gives us a clean estimate of the policy&rsquo;s effect.</p>
+        <p>But here&rsquo;s the thing the real world loves to do:</p>
+        <p><strong>Break that assumption. Repeatedly. And with enthusiasm.</strong></p>
+        <p>Sometimes there simply <em>isn&rsquo;t</em> a group of untreated units that look anything like the treated one. Maybe the treated unit is unique&mdash;a single state, a single city, a single agency that behaves nothing like its peers. Maybe it&rsquo;s on its own trajectory. Maybe the pre-trends are just&hellip; not parallel. At all.</p>
+        <p>When that happens, your standard DiD model is sunk. You can force it, sure, but the comparison will be flawed from the jump. DiD can&rsquo;t save you if the control group is fundamentally a different creature. And that&rsquo;s where Synthetic Control methods step in.</p>
+        <p>Synthetic Control starts with a simple but brilliant idea: <strong>If no single untreated unit can serve as a good comparison, why not build one?</strong></p>
+        <p>Instead of forcing a bad comparison on the analysis, Synthetic Control asks:</p>
+        <p style="background-color: #e6f2ff; padding: 15px; border-left: 4px solid #003366; font-style: italic;">&ldquo;Can we construct a weighted combination of untreated units that, together, mimic the treated unit&rsquo;s pre-intervention path as closely as possible?&rdquo;</p>
+        <p>If City A is the treated unit, maybe no single city looks like it. But maybe 30% of City B + 20% of City C + 10% of City D + 40% of City E <em>does</em>. Synthetic Control is essentially creating a mathematical doppelg&auml;nger&mdash;a custom-built counterfactual that replicates the treated unit's behavior before the intervention.</p>
+        <p>Once you&rsquo;ve constructed this &ldquo;synthetic&rdquo; version of the treated unit, everything else works like a high-quality DiD: you track both lines over time and look to see whether they diverge after the intervention. If the treated unit suddenly peels away from its synthetic twin, that gap is your estimated effect.</p>
+        <p>And the beauty of it? <strong>The pre-intervention fit isn&rsquo;t assumed. It&rsquo;s enforced.</strong> You literally create a control group that shares the treated unit&rsquo;s entire pre-policy trajectory, not just vaguely similar levels or slopes. It&rsquo;s DiD without having to pretend your comparison group was ever truly comparable in the first place.</p>
+        <p>Of course, there are trade-offs&mdash;and they matter:</p>
+        <ul>
+            <li>Synthetic Controls need lots of pre-treatment time points. No long pre-trend? No synthetic twin.</li>
+            <li>You need a healthy donor pool of untreated units. If the treated unit is truly one-of-a-kind, even a synthetic version won't fit well.</li>
+            <li>Results can be sensitive to the donor pool and weight constraints.</li>
+            <li>And, like every method in this module, SCM can still fall apart when the world hits you with multiple overlapping shocks.</li>
+        </ul>
+        <p>But when the conditions line up and your treated unit is just too unique for standard DiD, Synthetic Controls give you a way forward. They allow you to construct the comparison the world refused to give you&mdash;and sometimes that&rsquo;s the only way to make credible causal claims.</p>
+        <p>This is why Synthetic Control belongs in your conceptual toolbox. You may not use it often&mdash;but when you&rsquo;re staring at a single treated unit with a messy, idiosyncratic history and no hope of finding a parallel trend&hellip; you&rsquo;ll be glad this method exists.</p>
+    </div>
+    <hr style="border-top: 3px solid orange;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px;">
+        <h3><strong>Staggered Adoption Designs</strong></h3>
+        <p>Up to this point, our intervention-based designs&mdash;ITS and DiD&mdash;have assumed something pretty bold: that the policy or program we&rsquo;re studying &ldquo;turns on&rdquo; at a single, clean, identifiable moment. One day it&rsquo;s off. The next day it&rsquo;s on. Boom. Easy.</p>
+        <p>And yep, sometimes the world works like that. New laws take effect on January 1st. Agencies roll out reforms on a specific launch date. States implement mandates on a clearly announced start day. When that happens, we&rsquo;re thrilled, because clean timing is a causal inference gift.</p>
+        <p>But let&rsquo;s confront a painful truth: this is not how most policies enter the world. Real-world intervention can &ldquo;roll&rdquo;. They creep. They pilot. They phase in. Some cities adopt early while others wait a year&hellip;others wait five. Some agencies implement the policy fully right away, while others take forever&hellip;others don&rsquo;t implement with fidelity at all.</p>
+        <p>DiD was never designed for this. In fact, the traditional two-way fixed effects DiD model&mdash;the one that most people run by default&mdash;can produce wildly misleading results when treatment happens at different times for different units. It blends early adopters with late adopters. It uses treated units as controls for other treated units. It mixes apples with oranges in a way your methodologist friends will describe with increasingly panicked hand gestures.</p>
+        <p>So what do we do when treatment timing is staggered across units? We stop pretending we live in a one-shot policy world, and we start using designs that actually reflect how policy is rolled out in real life.</p>
+        <p><strong>Enter the world of staggered adoption designs.</strong> These methods exist because the classic DiD framework breaks down when treatment isn&rsquo;t synchronized. Instead of forcing all units into a single &ldquo;pre&rdquo; and &ldquo;post,&rdquo; staggered designs let us leverage variation in <em>when</em> each unit is treated. That&rsquo;s the key. Different units adopt the policy at different times, and that variation becomes the engine of identification.</p>
+        <p>There are a few major flavors here, but the basic intuition is consistent:</p>
+        <ul>
+            <li><strong>Align time to the moment of treatment for each unit.</strong> That becomes the unit&rsquo;s &ldquo;event time&rdquo; (e.g., year -2, year -1, year 0, year +1, etc.).</li>
+            <li><strong>Compare each treated unit to units not yet treated at that moment.</strong> No more using already-treated units as controls.</li>
+            <li><strong>Estimate how outcomes evolve before and after treatment.</strong> This generates dynamic treatment effects over time rather than a single before/after jump.</li>
+        </ul>
+        <p>When done correctly, staggered adoption designs let us:</p>
+        <ul>
+            <li>Test for pre-trends directly (a huge deal).</li>
+            <li>Visualize how the effect unfolds (does it ramp up? fade out?).</li>
+            <li>Avoid the contamination problems of na&iuml;ve TWFE DiD.</li>
+            <li>Reflect the messy reality of policy implementation.</li>
+        </ul>
+        <p>And of course, just like everything else in this module, there are limitations. These designs require:</p>
+        <ul>
+            <li>Plenty of units treated at different times (not just one or two).</li>
+            <li>Reliable treatment dates (no &ldquo;soft rollouts&rdquo; where start dates are fuzzy).</li>
+            <li>A world where units do not anticipate treatment far in advance.</li>
+            <li>Enough untreated time for each unit to estimate pre-trends.</li>
+        </ul>
+        <p>But when the stars align, staggered adoption designs provide something rare in applied work: a design that mirrors the actual way policies diffuse through governments and organizations.</p>
+        <p>They take the spirit of DiD&mdash;compare changes over time&mdash;and finally make it consistent with how interventions are typically adopted in real policy environments.</p>
+        <p>This is why they belong in your conceptual toolkit. You don&rsquo;t need to know how to code them (and trust me, modern methods get complicated fast). But you <em>do</em> need to know they exist&mdash;because staggered adoption is not the exception in public policy. It&rsquo;s the norm.</p>
+    </div>
+    <hr style="border-top: 3px solid orange;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px;">
+        <h3><strong>Qualitative Approaches: What We Haven&rsquo;t Talked About (But Really Should)</strong></h3>
+        <p>Let&rsquo;s pause for a moment and acknowledge something openly: This entire course has been ENTIRELY and UNAPOLOGETICALLY quantitative.</p>
+        <p>Every week, we&rsquo;ve been laser-focused on building comparisons in observational data. We&rsquo;ve focused on cleaning up confounding, taking time seriously, isolating exogenous variation: basically doing everything we can to estimate causal effects using numbers, models, and design logic.</p>
+        <p>And that&rsquo;s appropriate. You&rsquo;re in a data-driven decision-making course. You came here to get better with quantitative data and coding (at least I hope you know what you signed up for), not to decode interview transcripts or dig through municipal archives.</p>
+        <p>But here&rsquo;s the thing: Quantitative methods aren&rsquo;t always the right tool. Sometimes they&rsquo;re not even <em>capable</em> of answering the question you&rsquo;re trying to ask.</p>
+        <p>There are policy problems where the nuance is too deep, the mechanisms too complex, the data too thin, the units too unique, or the political context too central to be reduced to an equation (even a very elegant, well-designed equation). And when you hit those walls (you will), qualitative approaches become not only useful but <em>essential</em>.</p>
+        <p>A good methods education should acknowledge this. No single course can truly teach qualitative methods well (I&rsquo;ve seen many try and fail). These approaches are their own universe, with their own rules, strengths, and pitfalls. But I want to at least gesture toward them. I want you to leave this course understanding that when quant hits its limits, there <em>are</em> other ways to understand cause and effect: ways that are systematic, rigorous, and <em>absolutely vital</em> to real-world policy analysis.</p>
+        <p>So below is a quick introduction to a handful of qualitative approaches that are directly relevant to causal inference. You don&rsquo;t need to master them today. You just need to know they exist, what they can do, and why they matter, so that when you&rsquo;re out in the field and your quantitative tools aren&rsquo;t giving you the story you need, you&rsquo;ll recognize when it&rsquo;s time to turn to something else.</p>
+        <h4><strong>Process Tracing</strong></h4>
+        <p>Process tracing is the qualitative method most explicitly connected to causal inference. While quantitative tools help us determine <em>whether</em> X affects Y, process tracing helps us uncover <em>how</em> and <em>why</em>. It reconstructs the chain of events&mdash;decisions, actions, shocks, reactions&mdash;that link an intervention to an outcome. Think of it as a detective method: you&rsquo;re looking for &ldquo;causal fingerprints&rdquo; consistent with your hypothesized mechanism while ruling out alternative explanations. This approach is especially valuable when policymakers want to understand the mechanism behind an effect, when results appear inconsistent, or when you need to verify whether your model&rsquo;s story actually fits what happened on the ground.</p>
+        <h4><strong>Elite / Key Informant Interviews</strong></h4>
+        <p>Sometimes the people who shaped or implemented a policy know things no dataset ever will. Elite interviews tap into that insider knowledge: political pressures, organizational constraints, informal norms, leadership turnover, implementation failures, or behind-the-scenes motivations. These insights can dramatically reshape how we interpret quantitative findings. Interviews help assess whether your assumptions hold (e.g., parallel trends, exogeneity), clarify why a policy succeeded or failed, and expose heterogeneity that numbers alone can&rsquo;t capture. They&rsquo;re particularly useful when studying complex administrative systems, politically sensitive programs, or interventions where frontline behavior determines actual outcomes.</p>
+        <h4><strong>Structured Case Studies</strong></h4>
+        <p>Case studies get dismissed as &ldquo;stories&rdquo; when done poorly, but when structured well, they are powerful causal tools. A structured case study applies a consistent protocol (same questions, same variables, same analytic frame) to one or more cases. This structure enables systematic comparison (&ldquo;most similar systems&rdquo; or &ldquo;most different systems&rdquo;) that helps isolate potential causal factors. Case studies shine when you need depth, contextual nuance, or mechanism-level understanding. They&rsquo;re invaluable for validating quantitative findings, explaining unexpected results, or exploring cases where generalizability is less important than understanding a single, high-stakes instance in detail.</p>
+        <h4><strong>Document and Archival Analysis</strong></h4>
+        <p>Policies leave paper trails (e.g., internal memos, budget records, meeting minutes, audits, news accounts, public hearings, emails, directives). Document analysis uses these materials to construct timelines, understand intent, identify implementation barriers, and detect other simultaneous interventions that might confound your quantitative estimates. This method is especially helpful for diagnosing bias. Was there another policy introduced at the same time? Did leadership change? Did the agency quietly alter procedures? Archival analysis helps you catch these hidden shocks, contextualize your findings, and ensure you&rsquo;re not attributing an effect to the wrong cause.</p>
+        <h4><strong>Field Observation / Ethnographic Insight</strong></h4>
+        <p>Sometimes the only way to understand what&rsquo;s actually happening is to watch it. Field observation gives you firsthand insight into how a policy or program is implemented on the ground. You learn quickly that policies often look very different in practice than they do on paper. Observations help identify variation in compliance, fidelity, workflow bottlenecks, staff behavior, and organizational culture. These are factors that rarely appear in datasets but can profoundly shape outcomes. Ethnographic insights can refine your theory, improve your causal model, and illuminate discrepancies between formal procedures and real-world practice.</p>
+        <h4><strong>Mixed-Methods Integration</strong></h4>
+        <p>The strongest causal claims often come from combining quantitative and qualitative approaches. Mixed-methods designs use quantitative analysis to estimate whether a policy worked and qualitative analysis to understand <em>why</em>, <em>how</em>, and <em>for whom</em>. This approach provides triangulation (multiple sources of evidence pointing toward the same conclusion) which reduces the risk of overinterpreting a single coefficient or running too far with a statistical pattern. Mixed methods help ensure that your causal story is not only credible statistically but also meaningful, plausible, and actionable in real-world policy environments.</p>
+    </div>
+    <hr style="border-top: 3px solid orange;" />
+    <div class="content-box pad-box-mini border border-trbl border-round" style="background-color: #f8f8f8; padding: 15px;">
+        <h3><strong>Wrapping Up and Moving Forward</strong></h3>
+        <p>We&rsquo;ll close this module (and basically the course) with one final reminder: what you learned here is just the beginning.</p>
+        <p>The tools we covered this week&mdash;Matching, IV, Synthetic Control, Staggered Adoption Designs, and of course, all of the qualitative approaches&mdash;represent only a small slice of the broader causal inference universe. There are dozens of other methods out there, each with its own assumptions, strengths, quirks, and academic turf wars. Entire seminars, books, and careers are built around them.</p>
+        <p>But here&rsquo;s the part I want you to really hear: you already understand the <em>logic</em> that sits underneath all of them. All semester long, we&rsquo;ve been circling the same two ideas:</p>
+        <ul>
+            <li>Find a credible comparison (create like-to-like).</li>
+            <li>Take time seriously so we can separate causes from consequences.</li>
+        </ul>
+        <p>That&rsquo;s it. Every tool you will ever learn&mdash;now or in the future&mdash;builds on those principles. Don&rsquo;t let people make it harder for you than it is (they&rsquo;ll try).</p>
+        <p>Every tool has some advantage:</p>
+        <ul>
+            <li>Some will create better comparison groups (Matching).</li>
+            <li>Some will force new sources of exogenous variation (IV).</li>
+            <li>Some will generate better counterfactual trends (Synthetic Control).</li>
+            <li>Some will handle policy rollouts the way they actually happen (Staggered Designs).</li>
+            <li>Some will ignore the numbers altogether and dive deep into mechanism, context, and human behavior (qualitative methods).</li>
+        </ul>
+        <p>But the <em>why</em> behind them? You&rsquo;ve already mastered that.</p>
+        <p>And as you move forward in your career&mdash;whether you end up working in city government, nonprofit evaluation, policy research, public administration, or anywhere else evidence is needed&mdash;you&rsquo;ll find that causal inference is not a sprint. It is unabashedly a (VERY LONG) marathon. The problems get messier, the stakes get higher, and the perfect dataset almost never materializes. That&rsquo;s normal. That&rsquo;s the job.</p>
+        <p>My hope is that you now have:</p>
+        <ul>
+            <li>The vocabulary to recognize a credible design</li>
+            <li>The instincts to spot a flawed comparison</li>
+            <li>The confidence to question assumptions</li>
+            <li>The tools to start making sense of observational data</li>
+            <li>And the awareness that, when all else fails, other approaches (quantitative and qualitative) exist for a reason</li>
+        </ul>
+        <p>You&rsquo;re not expected to remember every formula or reproduce every method from scratch. In fact, in this day and age, absolutely nobody would want or expect you to. What matters is that when you face a tough causal question in the real world, you&rsquo;ll know where to begin. You&rsquo;ll know what questions to ask. You&rsquo;ll know which tools <em>might</em> help. And you&rsquo;ll know when the answer is: &ldquo;we need a different design&rdquo;, or &ldquo;we need a different kind different type of data.&rdquo;</p>
+        <p>So, for the last time&hellip; &rdquo;take a breath&rdquo;. You&rsquo;ve learned a lot. And this is only your first lap.</p>
+        <p>This work is meant to be built slowly, thoughtfully, over years, not weeks. Keep growing your toolkit, keep asking hard questions, and keep pushing yourself to understand <em>why</em> the world changes the way it does.</p>
+        <p>Let&rsquo;s call Week 14 a wrap.</p>
+    </div>
+</div>
